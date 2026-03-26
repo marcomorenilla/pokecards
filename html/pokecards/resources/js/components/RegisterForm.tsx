@@ -1,9 +1,13 @@
+/* eslint-disable import/order */
 /* eslint-disable @stylistic/padding-line-between-statements */
 import React, { useEffect, useState } from 'react';
 
 import { useInputChange } from '@/hooks/useInputChange';
 import { Checkbox } from './CheckBox';
 import { FormInput } from './FormInput';
+import ActionButton from './ActionButton';
+import { registerUser } from '@/services/authService';
+import { ErrorSpan } from './ErrorSpan';
 
 interface RegisterProps {
     handleFormVisibility: () => void;
@@ -17,7 +21,9 @@ const initialState = {
 
 export function RegisterForm({ handleFormVisibility }: RegisterProps) {
     const [isBackgroudRendered, setBackgroundRender] = useState(false);
-    const [formValues, handleChangeValues] = useInputChange(initialState);
+    const [isFormValid, setFormValid] = useState(false);
+    const [formValues, handleReset, handleChangeValues, stateRegisterErrors] =
+        useInputChange(initialState, true);
     useEffect(() => {
         setTimeout(() => {
             setBackgroundRender(true);
@@ -25,13 +31,28 @@ export function RegisterForm({ handleFormVisibility }: RegisterProps) {
     }, []);
 
     const { email, password, username } = formValues;
+    const { emailError, usernameError, passwordError } = stateRegisterErrors;
+
+    const handleRegister = async (data: any) => {
+        try {
+            await registerUser(data);
+        } catch (error) {
+            console.error('Axios error', error);
+        }
+    };
 
     const handleSubmit = (e: React.SubmitEvent) => {
         e.preventDefault();
 
         const formData = new FormData(e.target);
 
-        console.log('form', formData);
+        const data = {
+            name: formData.get('username'),
+            password: formData.get('password'),
+            email: formData.get('email'),
+        };
+        //handleRegister(data);
+        handleReset(initialState);
     };
 
     return (
@@ -49,6 +70,7 @@ export function RegisterForm({ handleFormVisibility }: RegisterProps) {
                 <h1 className="mb-10 text-3xl font-bold">Registro:</h1>
                 <FormInput
                     id="username"
+                    data-id-username
                     value={username}
                     type="text"
                     handleChange={handleChangeValues}
@@ -72,16 +94,14 @@ export function RegisterForm({ handleFormVisibility }: RegisterProps) {
                 >
                     Email:
                 </FormInput>
-                <span className="self-start px-1 text-sm text-red-500">
-                    Mensaje tipo
-                </span>
-
-                <button
-                    type="submit"
-                    className="cursor-pointer rounded-xl bg-yellow-600 p-2 font-semibold text-white hover:bg-yellow-800"
-                >
-                    Enviar
-                </button>
+                {emailError.length > 0 && <ErrorSpan>{emailError}</ErrorSpan>}
+                {passwordError.length > 0 && (
+                    <ErrorSpan>{passwordError}</ErrorSpan>
+                )}
+                {usernameError.length > 0 && (
+                    <ErrorSpan>{usernameError}</ErrorSpan>
+                )}
+                <ActionButton isFormValid={isFormValid}>Enviar</ActionButton>
                 <button
                     onClick={handleFormVisibility}
                     className="cursor-pointer self-start font-semibold text-blue-500 hover:underline"

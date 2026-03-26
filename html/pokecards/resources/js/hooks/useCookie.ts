@@ -1,11 +1,11 @@
 import Cookies from 'js-cookie';
 import { useCallback, useState } from 'react';
 
-type CookiesReturn = [
-    string | null,
-    (newValue: string, options?: Cookies.CookieAttributes) => void,
-    () => void,
-];
+type CookiesReturn = {
+    value: string | null;
+    updateCookie: (newValue: string, options?: Cookies.CookieAttributes) => void;
+    deleteCookie: () => void;
+};
 
 /**
  * A hook that allows to manage cookies.
@@ -34,5 +34,5 @@ export default function useCookie(cookieName: string): CookiesReturn {
         setValue(null);
     }, [cookieName]);
 
-    return [value, updateCookie, deleteCookie];
+    return {value, updateCookie, deleteCookie};
 }

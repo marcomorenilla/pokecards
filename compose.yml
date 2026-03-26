@@ -1,6 +1,6 @@
 services:
   app:
-    image: laravel-fish
+    image: laravel-fish:latest
     container_name: laravel-pokecards
     stdin_open: true 
     tty: true

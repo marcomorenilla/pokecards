@@ -1,0 +1,21 @@
+{
+    "name": "Pokecards",
+    "dockerComposeFile": "../compose.yml",
+    "service": "app",
+    "workspaceFolder": "/var/www/html",
+    "remoteUser": "devuser",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "bmewburn.vscode-intelephense-client",
+                "onecentlin.laravel-blade",
+                "amiralizadeh9480.laravel-extra-intellisense",
+                "shufo.vscode-blade-formatter"
+            ],
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "fish",
+                "php.validate.executablePath": "/usr/local/bin/php"
+            }
+        }
+    }
+}

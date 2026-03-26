@@ -1,6 +1,11 @@
+/* eslint-disable import/order */
 import React, { useEffect, useState } from 'react';
 import { useInputChange } from '@/hooks/useInputChange';
+import ActionButton from './ActionButton';
 import { FormInput } from './FormInput';
+import useCookie from '@/hooks/useCookie';
+import { getAuthenticatedUser } from '@/services/authService';
+import { router } from '@inertiajs/react';
 
 interface LoginProps {
     handleFormVisibility: () => void;
@@ -13,7 +18,12 @@ const initialState = {
 
 export function LoginForm({ handleFormVisibility }: LoginProps) {
     const [isBackgroudRendered, setBackgroundRender] = useState(false);
-    const [formValues, handleChangeValues] = useInputChange(initialState);
+    const [formValues, handleReset, handleChangeValues] = useInputChange(
+        initialState,
+        false,
+    );
+    const [isFormValid, setIsFormValid] = useState(false);
+    const { updateCookie } = useCookie('poke_auth_token');
     const { email, password } = formValues;
 
     useEffect(() => {
@@ -22,12 +32,27 @@ export function LoginForm({ handleFormVisibility }: LoginProps) {
         }, 500);
     }, []);
 
+    const handleGetUsers = async (data: any) => {
+        try {
+            const cookieValue = await getAuthenticatedUser(data);
+            updateCookie(JSON.stringify(cookieValue));
+        } catch (error) {
+            console.log('jajaj', error);
+        }
+    };
+
     const handleSubmit = (e: React.SubmitEvent) => {
         e.preventDefault();
 
         const formData = new FormData(e.target);
 
-        console.log('form', formData);
+        const data = {
+            email: formData.get('email'),
+            password: formData.get('password'),
+        };
+        handleGetUsers(data);
+        handleReset(initialState);
+        router.visit('/store');
     };
 
     return (
@@ -60,12 +85,7 @@ export function LoginForm({ handleFormVisibility }: LoginProps) {
                 >
                     Contraseña:
                 </FormInput>
-                <button
-                    type="submit"
-                    className="cursor-pointer rounded-xl bg-yellow-600 p-2 font-semibold text-white hover:bg-yellow-800"
-                >
-                    Enviar
-                </button>
+                <ActionButton isFormValid={isFormValid}>Enviar</ActionButton>
                 <button
                     onClick={handleFormVisibility}
                     className="cursor-pointer self-start font-semibold text-blue-500 hover:underline"
