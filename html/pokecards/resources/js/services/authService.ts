@@ -11,8 +11,9 @@ export async function getAuthenticatedUser(data: any) {
 }
 
 export async function registerUser(data: any) {
+    console.log('registering new user', data);
     const response = await axios.post(
-        'http://localhost:8001/api/users/authenticate',
+        'http://localhost:8001/api/users/authenticate/new',
         data,
     );
     return response.data;

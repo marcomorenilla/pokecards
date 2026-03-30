@@ -4,12 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use Exception;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Date;
-use Illuminate\Support\Facades\Hash;
-
-use function Symfony\Component\Clock\now;
+use Inertia\Inertia;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class UserController extends Controller
 {
@@ -18,7 +15,15 @@ class UserController extends Controller
         $users = User::all();
         return response()->json($users, 201);
     }
-    public function store(Request $request)
+
+    public function show()
+    {
+        return Inertia::render('index', [
+            'allUsers' => User::all(),
+        ]);
+    }
+
+    public function save(Request $request)
     {
         $data = $request->all();
 
@@ -29,34 +34,16 @@ class UserController extends Controller
 
     public function authenticate(Request $request)
     {
-        $user = User::where('email', $request->email)->first();
-
-
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            return response()->json([
-                'message' => 'Las credenciales son incorrectas.'
-            ], 401);
-        }
-
-        $token = ["user" => $user['email'], "logged_at" => time()];
-
-        return response()->json([
-            'user' => $user,
-            'acces_token' => Hash::make($token["user"]),
-            'logged_at' => $token["logged_at"],
-            'message' => '¡Bienvenido de nuevo!'
-        ], 200);
-    }
-
-    public function authenticate2(Request $request)
-    {
         $credentials = $request->only('email', 'password');
 
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials, true)) {
             $request->session()->regenerate();
-            return redirect()->intended('/');
+
+            return redirect('/');
         }
 
-        return back()->withErrors(['email' => 'Datos incorrectos']);
+        return Inertia::render('error', [
+            'status' => 401
+        ]);
     }
 }

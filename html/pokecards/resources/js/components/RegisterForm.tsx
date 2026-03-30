@@ -51,7 +51,7 @@ export function RegisterForm({ handleFormVisibility }: RegisterProps) {
             password: formData.get('password'),
             email: formData.get('email'),
         };
-        //handleRegister(data);
+        handleRegister(data);
         handleReset(initialState);
     };
 

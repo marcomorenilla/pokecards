@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { useInputChange } from '@/hooks/useInputChange';
 import ActionButton from './ActionButton';
 import { FormInput } from './FormInput';
-import useCookie from '@/hooks/useCookie';
 import { getAuthenticatedUser } from '@/services/authService';
 import { router } from '@inertiajs/react';
 
@@ -23,7 +22,6 @@ export function LoginForm({ handleFormVisibility }: LoginProps) {
         false,
     );
     const [isFormValid, setIsFormValid] = useState(false);
-    const { updateCookie } = useCookie('poke_auth_token');
     const { email, password } = formValues;
 
     useEffect(() => {
@@ -34,10 +32,9 @@ export function LoginForm({ handleFormVisibility }: LoginProps) {
 
     const handleGetUsers = async (data: any) => {
         try {
-            const cookieValue = await getAuthenticatedUser(data);
-            updateCookie(JSON.stringify(cookieValue));
+            const currentUser = await getAuthenticatedUser(data);
         } catch (error) {
-            console.log('jajaj', error);
+            console.log('Login-form handle-get-users error', error);
         }
     };
 
@@ -50,9 +47,12 @@ export function LoginForm({ handleFormVisibility }: LoginProps) {
             email: formData.get('email'),
             password: formData.get('password'),
         };
-        handleGetUsers(data);
         handleReset(initialState);
-        router.visit('/store');
+        router.post('/api/users/authenticate', data, {
+            onSuccess: () => {
+                console.log('success');
+            },
+        });
     };
 
     return (

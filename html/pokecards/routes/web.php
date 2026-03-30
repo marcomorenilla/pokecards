@@ -1,7 +1,12 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::inertia('/', 'welcome')->name('home');
-Route::inertia('/auth', 'auth')->name('auth');
-Route::inertia('/store', 'store')->name('store');
+
+Route::inertia('/auth', 'auth')->name('login');
+
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/', [UserController::class, 'show'])->name('home');
+});
