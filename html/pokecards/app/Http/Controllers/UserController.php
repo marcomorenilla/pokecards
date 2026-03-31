@@ -23,7 +23,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function save(Request $request)
+    public function create(Request $request)
     {
         $data = $request->all();
 
@@ -45,5 +45,15 @@ class UserController extends Controller
         return Inertia::render('error', [
             'status' => 401
         ]);
+    }
+
+    public function addCoins(Request $request)
+    {
+        $coins = $request->coins;
+
+        $user = User::findOrfail(Auth::id());
+        $user->increment('coins', $coins);
+
+        return back()->with('Message', 'Monedas recargadas');
     }
 }

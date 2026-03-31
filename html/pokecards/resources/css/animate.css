@@ -1,0 +1,15 @@
+.animate-jump {
+    animation: jump 2s infinite ease-in-out;
+}
+
+@keyframes jump {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(5px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}

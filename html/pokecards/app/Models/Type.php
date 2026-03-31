@@ -3,12 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Type extends Model
 {
-    protected $fillable = ['type', 'type_color']
+    protected $fillable = ['type', 'type_color'];
 
-    public function pokemons(): BelongsToMany{
+    public function pokemons(): BelongsToMany
+    {
         return $this->belongsToMany(Pokemon::class, 'types_pokemons', 'types_id', 'pokemons_id');
     }
 }
