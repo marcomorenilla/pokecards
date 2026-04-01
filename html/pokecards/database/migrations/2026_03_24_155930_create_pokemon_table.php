@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('pokemons', function (Blueprint $table) {
             $table->id();
-            $table->string('number', 4)->unique;
+            $table->unsignedInteger('pokeapi_id');
             $table->string('name');
             $table->unsignedInteger('hp');
             $table->unsignedInteger('attack');
@@ -21,11 +21,11 @@ return new class extends Migration
             $table->unsignedInteger('special_attack');
             $table->unsignedInteger('special_defense');
             $table->unsignedInteger('speed');
-            $table->integer('weigth');
+            $table->integer('weight');
             $table->integer('height');
             $table->string('description');
             $table->string('main_movement');
-            $table->string('secondary_movement');
+            $table->string('secondary_movement')->nullable(true);
             $table->string('base_experience');
             $table->string('sprite');
             $table->timestamps();

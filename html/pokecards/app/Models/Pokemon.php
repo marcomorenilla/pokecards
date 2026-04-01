@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Pokemon extends Model
 {
-    protected $fillable = ['number', 'name', 'hp', 'attack', 'defense', 'special_attack', 'special_defense', 'speed', 'weigth', 'height', 'description', 'main_movement', 'secondary_movement', 'base_experience', 'sprite'];
+    protected $table = 'pokemons';
+    protected $fillable = ['pokeapi_id', 'name', 'hp', 'attack', 'defense', 'special_attack', 'special_defense', 'speed', 'weigth', 'height', 'description', 'main_movement', 'secondary_movement', 'base_experience', 'sprite'];
 
     public function types(): BelongsToMany
     {

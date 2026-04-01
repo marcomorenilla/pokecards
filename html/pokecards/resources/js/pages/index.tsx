@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CoinsGrid } from '@/components/CoinsGrid';
 import { NavBar } from '@/components/navigation/NavBar';
 import { Footer } from '@/components/Footer';
 import { router } from '@inertiajs/react';
-import dbSeeder from '@/services/dbSeeder';
+import { dbPokemonSeeder } from '@/services/dbPokemonSeeder';
+import { dbTypesSeeder } from '@/services/dbTypesSeeder';
 
 interface User {
     id: number;
@@ -17,18 +18,31 @@ interface IndexProps {
 }
 
 const Index = ({ auth }: IndexProps) => {
+    const isSeeded = false;
     const { id, name, email, coins } = auth.user;
     const [isDialogOpen, setIsDialogOpen] = useState(false);
 
     const handleOpenDialog = () => {
-        console.log('cambiando estado', isDialogOpen);
         setIsDialogOpen(!isDialogOpen);
     };
 
-    const dbSeed = () => dbSeeder();
+    const asyncSeeder = async () => {
+        const newPokedex = await dbPokemonSeeder();
+        /*const newTypes = await dbTypesSeeder();
+        const typesPayload = { types: newTypes };
+        router.post('/dbCreateTypes', typesPayload, {
+            onSuccess: () => console.log('exito',typesPayload),
+        });*/
+        const pokedexPayload = { pokedex: newPokedex };
+        router.post('/dbCreatePokemon', pokedexPayload, {
+            onSuccess: () => console.log('pokedex creada', pokedexPayload),
+        });
+    };
 
     useEffect(() => {
-        dbSeed();
+        if (!isSeeded) {
+            asyncSeeder();
+        }
     }, []);
 
     return (
