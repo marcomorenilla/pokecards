@@ -30,7 +30,7 @@ class UserController extends Controller
 
         $user = User::create($data);
 
-        return response()->json($user, 201);
+        return redirect('/auth');
     }
 
     public function authenticate(Request $request)

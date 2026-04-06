@@ -75,7 +75,7 @@ export function CoinCard({
             </section>
             <button
                 className={`mt-6 w-full rounded-xl bg-white p-3 font-bold text-black ${cardColor.hover} hover:text-white`}
-                onClick={() => onCardBuy(-price)}
+                onClick={() => onCardBuy(cards)}
             >
                 Comprar
             </button>

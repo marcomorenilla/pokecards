@@ -8,6 +8,7 @@ import { FormInput } from './FormInput';
 import ActionButton from './ActionButton';
 import { registerUser } from '@/services/authService';
 import { ErrorSpan } from './ErrorSpan';
+import { router } from '@inertiajs/react';
 
 interface RegisterProps {
     handleFormVisibility: () => void;
@@ -35,7 +36,12 @@ export function RegisterForm({ handleFormVisibility }: RegisterProps) {
 
     const handleRegister = async (data: any) => {
         try {
-            await registerUser(data);
+            router.post('/users/authenticate/new', data, {
+                onSuccess: () => {
+                    console.log('Usuario registrado:', data);
+                    handleFormVisibility();
+                },
+            });
         } catch (error) {
             console.error('Axios error', error);
         }

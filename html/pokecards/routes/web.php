@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\PokemonController;
 use App\Http\Controllers\TypeController;
 use App\Http\Controllers\UserController;
@@ -7,6 +8,10 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::inertia('/auth', 'auth')->name('login');
+
+
+Route::post('/users/authenticate/new', [UserController::class, 'create']);
+Route::post('/cards/open', [CollectionController::class, 'getCards'])->name('cards.open');
 
 
 Route::middleware('auth:sanctum')->group(function () {
