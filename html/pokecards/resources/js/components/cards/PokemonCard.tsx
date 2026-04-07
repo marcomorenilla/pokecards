@@ -1,4 +1,7 @@
 import { useEffect, useState } from 'react';
+import '@/css/animate.css';
+import { TypeBadge } from './TypeBadge';
+import { config } from 'process';
 
 interface PokemonType {
     type: string;
@@ -30,6 +33,30 @@ interface CardProps {
     pokemon: Pokemon;
 }
 
+const typeConfig: any = {
+    common: {
+        label: 'COMÚN',
+    },
+    uncommon: {
+        label: 'INFRECUENTE',
+    },
+    rare: {
+        label: 'RARA',
+        color: '#77c24d',
+        effect: 'animate-rare',
+    },
+    epic: {
+        label: 'ÉPICA',
+        color: '#b15db0',
+        effect: 'animate-epic',
+    },
+    legendary: {
+        label: 'LEGENDARIA',
+        color: '#ffcb05',
+        effect: 'animate-legendary',
+    },
+};
+
 export function PokemonCard({ pokemon }: CardProps) {
     const {
         id,
@@ -51,33 +78,32 @@ export function PokemonCard({ pokemon }: CardProps) {
         types,
     } = pokemon;
 
-    let primary = pokemon.types[0]?.type_color || '#ccc' + 80;
-    let secondary = pokemon.types[1]?.type_color || primary + 80;
     const cardBaseExperience: any = Number(base_experience);
-    let cardType = '';
-
+    let typeKey = '';
     if (cardBaseExperience < 100) {
-        cardType = 'COMÚN';
+        typeKey = 'common';
     } else if (cardBaseExperience < 150) {
-        cardType = 'INFRECUENTE';
+        typeKey = 'uncommon';
     } else if (cardBaseExperience < 200) {
-        cardType = 'RARA';
+        typeKey = 'rare';
     } else if (cardBaseExperience < 250) {
-        cardType = 'ÉPICA';
+        typeKey = 'epic';
     } else {
-        cardType = 'LEGENDARIA';
+        typeKey = 'legendary';
     }
+    let cardType = typeConfig[typeKey];
 
-    console.log('cardBaseExperience', cardBaseExperience);
+    let primary = cardType.color || types[0]?.type_color || '#ccc' + 80;
+    let secondary = cardType.color || types[1]?.type_color || primary + 80;
 
     return (
         <article
             style={{
                 background: `linear-gradient(to bottom right, ${primary}, ${secondary})`,
             }}
-            className={`h-auto w-72 rounded-xl p-3 md:w-96`}
+            className={`animate-opacity relative h-140 w-72 overflow-hidden rounded-xl p-3 md:w-96`}
         >
-            <section className="flex justify-between font-bold text-gray-700">
+            <section className="flex justify-between text-xl font-bold text-gray-700">
                 <div className="flex gap-1">
                     <p className="px-1">
                         #{String(pokeapi_id).padStart(3, '0')}
@@ -87,19 +113,19 @@ export function PokemonCard({ pokemon }: CardProps) {
                     </p>
                 </div>
                 <div className="flex gap-1">
-                    <p className="font-bold text-red-500">HP</p>
-                    <p>{hp}</p>
+                    <p className="font-bold">HP</p>
+                    <p className="font-black text-red-500">{hp}</p>
                 </div>
             </section>
             <section className="rounded-xl bg-radial from-white/80 to-white/0 p-1">
                 <p className="text-sm font-bold text-gray-600 italic">
-                    {cardType}
+                    {cardType.label}
                 </p>
                 <div className="flex justify-center">
                     <img
                         src={sprite}
                         alt="Imagen de carta pokemon cargada de Github"
-                        className="size-70"
+                        className="size-40"
                     />
                 </div>
                 <div className="flex justify-between px-1 font-semibold text-gray-700">
@@ -108,7 +134,7 @@ export function PokemonCard({ pokemon }: CardProps) {
                 </div>
             </section>
             <section>
-                <p className="mt-2 rounded-xl bg-white/30 p-1 text-gray-600 italic">
+                <p className="mt-2 h-24 rounded-xl bg-white/30 p-1 text-gray-600 italic">
                     "{description}"
                 </p>
             </section>
@@ -120,27 +146,44 @@ export function PokemonCard({ pokemon }: CardProps) {
                 </div>
                 <div className="flex items-center gap-1 p-2 text-sm">
                     <div className="size-1 rounded-full bg-gray-600"></div>
-                    <p>{secondary_movement.toUpperCase() || ''}</p>
+                    <p>{secondary_movement?.toUpperCase() || ''}</p>
                 </div>
             </section>
-            <section className="mt-2 flex items-center justify-between border-t border-gray-600 p-3 text-xs font-bold text-gray-700">
+            <section className="mt-2 flex items-center justify-between border-t border-gray-600 p-3 font-bold text-gray-700">
                 <div className="text-center">
-                    <p>ATAQUE</p>
+                    <p className="text-gray-600">AT.</p>
                     <div>{attack}</div>
                 </div>
                 <div className="text-center">
-                    <p>DEFENSA</p>
+                    <p className="text-gray-600">DEF.</p>
                     <div>{defense}</div>
                 </div>
                 <div className="text-center">
-                    <p>VELOCIDAD</p>
+                    <p className="text-gray-600">VEL.</p>
                     <div>{speed}</div>
                 </div>
                 <div className="text-center">
-                    <p>EXPERIENCIA</p>
+                    <p className="text-gray-600">EXP.</p>
                     <div>{base_experience}</div>
                 </div>
             </section>
+            <section className="text flex justify-center gap-1 text-sm font-bold text-gray-600">
+                {types.map((type) => {
+                    return <TypeBadge key={type.type}>{type.type}</TypeBadge>;
+                })}
+            </section>
+            {cardType.effect == 'animate-rare' && (
+                <div className="animate-rare absolute inset-0 z-1 h-full w-full rounded-xl bg-linear-to-r from-transparent from-40% via-white/60 to-white/30 to-70%"></div>
+            )}
+            {cardType.effect == 'animate-epic' && (
+                <div className="animate-epic absolute inset-0 z-1 h-full w-full rounded-xl bg-radial from-white to-10% bg-size-[50px_50px]"></div>
+            )}
+            {cardType.effect == 'animate-legendary' && (
+                <section>
+                    <div className="animate-rare absolute inset-0 z-2 h-full w-full rounded-xl bg-linear-to-r from-transparent from-40% via-white/60 to-white/30 to-70%"></div>
+                    <div className="animate-epic absolute inset-0 z-1 h-full w-full rounded-xl bg-radial from-white to-30% bg-size-[20px_20px]"></div>
+                </section>
+            )}
         </article>
     );
 }

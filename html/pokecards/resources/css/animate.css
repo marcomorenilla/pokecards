@@ -2,6 +2,18 @@
     animation: jump 2s infinite ease-in-out;
 }
 
+.animate-opacity {
+    animation: opacity 1s ease-in-out;
+}
+
+.animate-rare {
+    animation: bright 2s infinite ease-in-out;
+}
+
+.animate-epic {
+    animation: stars 2s infinite ease-in-out;
+}
+
 @keyframes jump {
     0% {
         transform: translateY(0px);
@@ -11,5 +23,39 @@
     }
     100% {
         transform: translateY(0px);
+    }
+}
+
+@keyframes opacity {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes bright {
+    0% {
+        transform: translateX(-100%) translateY(-100%) rotate(45deg);
+        scale: 2;
+    }
+    100% {
+        transform: translateX(100%) translateY(100%) rotate(45deg);
+        scale: 2;
+    }
+}
+
+@keyframes stars {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+        scale: 1.2;
+    }
+    100% {
+        opacity: 0;
     }
 }

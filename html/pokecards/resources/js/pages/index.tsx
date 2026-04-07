@@ -1,47 +1,15 @@
-import { useEffect, useState } from 'react';
-import { CoinsGrid } from '@/components/CoinsGrid';
-import { NavBar } from '@/components/navigation/NavBar';
-import { Footer } from '@/components/Footer';
-import { asyncSeeder } from '@/services/dbSeeder';
-interface User {
-    id: number;
-    name: string;
-    email: string;
-    coins: number;
-}
+import MainLayout from '@/js/layouts/MainLayout';
+import { IndexGrid } from '../components/index/IndexGrid';
 
-interface IndexProps {
-    auth: any;
-}
+const Index = ({ auth }: any) => {
+    const { user } = auth;
+    return <IndexGrid coins={user.coins} />;
+};
 
-const Index = ({ auth }: IndexProps) => {
-    const isSeeded = true;
-    const { id, name, email, coins } = auth.user;
-    const [isDialogOpen, setIsDialogOpen] = useState(false);
+Index.layout = (page: any) => {
+    const { auth } = page.props;
 
-    const handleOpenDialog = () => {
-        setIsDialogOpen(!isDialogOpen);
-    };
-
-    useEffect(() => {
-        if (!isSeeded) {
-            asyncSeeder();
-        }
-    }, []);
-
-    return (
-        <>
-            <main className="h-full bg-radial-[at_0%_0%] from-[#222] to-[#000c] to-90% p-3">
-                <NavBar
-                    coins={coins}
-                    onOpenDialog={handleOpenDialog}
-                    isDialogOpen={isDialogOpen}
-                />
-                <CoinsGrid coins={coins} />
-            </main>
-            <Footer />
-        </>
-    );
+    return <MainLayout auth={auth}>{page}</MainLayout>;
 };
 
 export default Index;

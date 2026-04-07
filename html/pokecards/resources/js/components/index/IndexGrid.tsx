@@ -1,34 +1,32 @@
-import { useEffect, useRef, useState } from 'react';
-import { CoinCard } from './CoinCard';
+import { useEffect, useState } from 'react';
+import { IndexGridSection } from './IndexGridSection';
 import { router } from '@inertiajs/react';
 import axios from 'axios';
-import { PokemonCard } from './PokemonCard';
-
+import { ErrorModal } from '../modals/ErrorModal';
+import '@/css/animate.css';
+import { NewCardsModal } from '../modals/NewCardsModal';
 interface CoinsProps {
     coins: number;
 }
 
-const initialCardContent: any = [];
-export function CoinsGrid({ coins }: CoinsProps) {
+const initialPackContent: any = [];
+export function IndexGrid({ coins }: CoinsProps) {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
-    const dialogRef = useRef<HTMLDialogElement>(null);
-    const [cardContent, setCardContent] = useState(initialCardContent);
+    const [isErrored, setIsErrored] = useState(false);
     const [cardIndex, setCardIndex] = useState(0);
-    useEffect(() => {
-        if (isDialogOpen) {
-            dialogRef.current?.showModal();
-        } else {
-            dialogRef.current?.close();
-        }
-    }, [isDialogOpen]);
+    const [packContent, setPackContent] = useState(initialPackContent);
 
     useEffect(() => {
-        console.log('changing card content: ', cardContent);
+        console.log('changing card content: ', packContent);
         setCardIndex(0);
-    }, [cardContent]);
+    }, [packContent]);
 
     const handleDialog = () => {
         setIsDialogOpen(!isDialogOpen);
+    };
+
+    const handleIsErrored = () => {
+        setIsErrored(!isErrored);
     };
 
     const handleCardBuy = (amount: number) => {
@@ -37,24 +35,36 @@ export function CoinsGrid({ coins }: CoinsProps) {
             10: 100,
             15: 200,
         }[amount];
-        if (coins - cost > 0) {
+        if (coins - cost >= 0) {
             router.post('/users/addCoins', { coins: -cost });
             handleShowCards(amount);
-            handleDialog();
         } else {
-            alert('no dinero');
+            handleIsErrored();
         }
     };
 
     const handleShowCards = async (number: Number) => {
         const packContent = await axios.post('/cards/open', { cards: number });
-        setCardContent(packContent.data);
+        setPackContent(packContent.data);
+        handleDialog();
+    };
+
+    const handleNextCard = () => {
+        if (cardIndex < packContent.length - 1) {
+            console.log('current cardIndex', cardIndex);
+            console.log('current packContent length', packContent.length);
+            setCardIndex(cardIndex + 1);
+        } else {
+            setCardIndex(0);
+            setPackContent(initialPackContent);
+            handleDialog();
+        }
     };
 
     return (
         <>
             <section className="grid h-fit grid-cols-1 justify-evenly gap-5 p-10 text-white lg:grid-cols-3">
-                <CoinCard
+                <IndexGridSection
                     color="basic"
                     price={50}
                     cards={5}
@@ -66,8 +76,8 @@ export function CoinsGrid({ coins }: CoinsProps) {
                     <section className="mt-3 text-gray-300">
                         Para los que necesitan lo justo
                     </section>
-                </CoinCard>
-                <CoinCard
+                </IndexGridSection>
+                <IndexGridSection
                     color="medium"
                     price={100}
                     cards={10}
@@ -79,8 +89,8 @@ export function CoinsGrid({ coins }: CoinsProps) {
                     <section className="mt-3 text-gray-300">
                         Para los que van más allá
                     </section>
-                </CoinCard>
-                <CoinCard
+                </IndexGridSection>
+                <IndexGridSection
                     color="vip"
                     price={200}
                     cards={15}
@@ -92,27 +102,23 @@ export function CoinsGrid({ coins }: CoinsProps) {
                     <section className="mt-3 text-gray-300">
                         Para los inconformistas
                     </section>
-                </CoinCard>
+                </IndexGridSection>
             </section>
-            <dialog
-                ref={dialogRef}
-                className="h-screen max-h-none w-screen max-w-none bg-transparent backdrop-blur-lg"
-            >
-                <div className="flex h-full items-center justify-center text-white">
-                    <div className="flex h-5/6 w-1/2 flex-col items-center justify-start gap-3 rounded-xl bg-gray-600 p-5 shadow-[0px_0px_20px_20px] shadow-cyan-500">
-                        <h1 className="text-3xl font-bold">SOBRE CONSEGUIDO</h1>
-                        {cardContent.length > 0 && (
-                            <PokemonCard pokemon={cardContent[cardIndex]} />
-                        )}
-                        <button
-                            onClick={handleDialog}
-                            className="w-full rounded-xl bg-yellow-500 p-2 text-xl font-bold hover:bg-yellow-600"
-                        >
-                            Siguiente carta
-                        </button>
-                    </div>
-                </div>
-            </dialog>
+            {isDialogOpen && (
+                <NewCardsModal
+                    isDialogOpen={isDialogOpen}
+                    handleDialog={handleDialog}
+                    pokemon={packContent[cardIndex]}
+                    handleNextCard={handleNextCard}
+                />
+            )}
+            {isErrored && (
+                <ErrorModal
+                    title="No tienes suficientes monedas"
+                    message="Recarga monedas antes de realizar una compra"
+                    onCloseDialog={handleIsErrored}
+                />
+            )}
         </>
     );
 }

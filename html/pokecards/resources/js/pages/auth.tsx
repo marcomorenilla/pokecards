@@ -2,8 +2,8 @@ import { Head } from '@inertiajs/react';
 
 import { useState } from 'react';
 
-import { LoginForm } from '@/components/LoginForm';
-import { RegisterForm } from '@/components/RegisterForm';
+import { LoginForm } from '@/js/components/auth/LoginForm';
+import { RegisterForm } from '@/js/components/auth/RegisterForm';
 
 export default function Auth() {
     const [isRegistered, setIsRegistered] = useState(true);

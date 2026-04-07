@@ -29,4 +29,9 @@ export default defineConfig({
             formVariants: true,
         }),
     ],
+    resolve: {
+        alias: {
+            '@': path.resolve(__dirname, './resources'),
+        },
+    },
 });

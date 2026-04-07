@@ -1,41 +1,12 @@
 import { router } from '@inertiajs/react';
 import React, { useEffect, useRef, useState } from 'react';
+import AddCoinsModal from '../modals/AddCoinsModal';
 
 interface NavProps {
     coins: number;
-    isDialogOpen: boolean;
-    onOpenDialog: () => void;
+    onAddCoins: () => void;
 }
-export function NavBar({ coins, isDialogOpen, onOpenDialog }: NavProps) {
-    const dialogRef = useRef<HTMLDialogElement>(null);
-
-    console.log('inicial isDialog', isDialogOpen);
-
-    useEffect(() => {
-        if (isDialogOpen && dialogRef.current) {
-            console.log('mostrando modal');
-            dialogRef.current.showModal();
-        } else {
-            dialogRef.current?.close();
-        }
-    }, [isDialogOpen]);
-
-    const handleCoinsSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const formData = new FormData(e.currentTarget);
-        const selectedCoins = formData.get('coins') || 0;
-
-        console.log('Cantidad seleccionada:', selectedCoins);
-        router.post(
-            '/users/addCoins',
-            { coins: Number(selectedCoins) },
-            {
-                onError: (e) => {
-                    console.log(e);
-                },
-            },
-        );
-    };
+export function NavBar({ coins, onAddCoins }: NavProps) {
     return (
         <>
             <nav className="fixed right-0 bottom-0 left-0 z-2 mb-1 flex w-96 max-w-screen items-center justify-center justify-self-center rounded-xl border border-yellow-600/50 bg-gray-700 p-3 lg:relative lg:left-0 lg:w-full lg:justify-between">
@@ -185,99 +156,13 @@ export function NavBar({ coins, isDialogOpen, onOpenDialog }: NavProps) {
                         <p className="text-white">{coins}</p>
                     </div>
                     <div
-                        onClick={onOpenDialog}
+                        onClick={onAddCoins}
                         className="flex size-5 cursor-pointer items-center justify-center rounded-full bg-yellow-500 p-1 font-bold text-white hover:size-7"
                     >
                         <p className="text-xl">+</p>
                     </div>
                 </section>
             </nav>
-            <dialog
-                ref={dialogRef}
-                className="h-screen max-h-none w-screen max-w-none bg-transparent backdrop-blur-lg"
-            >
-                <div className="flex h-full w-full items-center justify-center">
-                    <form
-                        onSubmit={handleCoinsSubmit}
-                        method="dialog"
-                        className="relative h-fit w-96 flex-col rounded-xl bg-gray-600 p-3 text-center text-white"
-                    >
-                        <h1 className="mb-10 text-3xl font-bold">
-                            Recargar monedas
-                        </h1>
-                        <p
-                            className="absolute top-0 right-3 text-3xl"
-                            onClick={onOpenDialog}
-                        >
-                            ×
-                        </p>
-                        <p className="text-gray-300">
-                            Elige la cantidad que quieres recargar:
-                        </p>
-                        <div className="mt-10 grid grid-cols-2 gap-2">
-                            <label
-                                htmlFor="100"
-                                className="group rounded-xl border border-gray-100 bg-gray-700 p-3 font-bold text-white has-checked:border-yellow-500 has-checked:bg-yellow-500/25 has-checked:text-yellow-500"
-                            >
-                                <input
-                                    type="radio"
-                                    id="100"
-                                    name="coins"
-                                    value={100}
-                                    className="sr-only"
-                                />
-                                100
-                            </label>
-                            <label
-                                htmlFor="500"
-                                className="group rounded-xl border border-gray-100 bg-gray-700 p-3 font-bold text-white has-checked:border-yellow-500 has-checked:bg-yellow-500/25 has-checked:text-yellow-500"
-                            >
-                                <input
-                                    type="radio"
-                                    id="500"
-                                    name="coins"
-                                    value={500}
-                                    className="sr-only"
-                                />
-                                500
-                            </label>
-                            <label
-                                htmlFor="1000"
-                                className="group rounded-xl border border-gray-100 bg-gray-700 p-3 font-bold text-white has-checked:border-yellow-500 has-checked:bg-yellow-500/25 has-checked:text-yellow-500"
-                            >
-                                <input
-                                    type="radio"
-                                    id="1000"
-                                    name="coins"
-                                    value={1000}
-                                    className="sr-only"
-                                />
-                                1000
-                            </label>
-                            <label
-                                htmlFor="5000"
-                                className="group rounded-xl border border-gray-100 bg-gray-700 p-3 font-bold text-white has-checked:border-yellow-500 has-checked:bg-yellow-500/25 has-checked:text-yellow-500"
-                            >
-                                <input
-                                    type="radio"
-                                    id="5000"
-                                    name="coins"
-                                    value={5000}
-                                    className="sr-only"
-                                />
-                                5000
-                            </label>
-                        </div>
-                        <button
-                            type="submit"
-                            onClick={onOpenDialog}
-                            className="mt-10 mb-4 w-full rounded-xl bg-white p-3 font-semibold text-black hover:bg-yellow-600 hover:text-white"
-                        >
-                            Confirmar
-                        </button>
-                    </form>
-                </div>
-            </dialog>
         </>
     );
 }

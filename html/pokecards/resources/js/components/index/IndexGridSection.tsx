@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../css/animate.css';
+import '@/css/animate.css';
 const colorMap = {
     basic: {
         gradient: 'from-cyan-700 to-cyan-500',
@@ -29,7 +29,7 @@ interface CoinProps {
     onCardBuy: (amount: number) => void;
     children: React.ReactNode[];
 }
-export function CoinCard({
+export function IndexGridSection({
     color,
     cards,
     price,
