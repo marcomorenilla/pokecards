@@ -14,7 +14,7 @@
             ],
             "settings": {
                 "terminal.integrated.defaultProfile.linux": "fish",
-                "php.validate.executablePath": "/usr/local/bin/php"
+                "php.validate.executablePath": "/usr/local/bin/php" 
             }
         }
     }
