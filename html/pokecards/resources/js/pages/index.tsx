@@ -1,6 +1,8 @@
 import MainLayout from '@/js/layouts/MainLayout';
 import { IndexGrid } from '../components/index/IndexGrid';
+import { asyncSeeder } from '../services/dbSeeder';
 
+//asyncSeeder();
 const Index = ({ auth }: any) => {
     const { user } = auth;
     return <IndexGrid coins={user.coins} />;

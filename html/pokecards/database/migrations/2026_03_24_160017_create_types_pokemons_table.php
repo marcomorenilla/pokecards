@@ -13,9 +13,8 @@ return new class extends Migration
     {
         Schema::create('types_pokemons', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('pokemons_id')->constrained()->onDelete('cascade');
-            $table->foreignId('types_id')->constrained()->onDelete('cascade');
-            $table->unique(['pokemons_id', 'types_id']);
+            $table->foreignId('pokemon_id')->constrained('pokemons')->onDelete('cascade');
+            $table->foreignId('type_id')->constrained('types')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('collections', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('users_id')->constrained()->onDelete('cascade');
-            $table->foreignId('pokemons_id')->constrained()->onDelete('cascade');
-            $table->unique(['users_id', 'pokemons_id']);
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('pokemon_id')->constrained('pokemons')->onDelete('cascade');
+            $table->integer('quantity')->default(1);
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('collection');
+        Schema::dropIfExists('collections');
     }
 };

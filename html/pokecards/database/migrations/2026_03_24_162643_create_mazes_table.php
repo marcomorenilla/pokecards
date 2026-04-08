@@ -13,9 +13,8 @@ return new class extends Migration
     {
         Schema::create('mazes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('users_id')->constrained()->onDelete('cascade');
-            $table->foreignId('pokemons_id')->constrained()->onDelete('cascade');
-            $table->unique(['users_id', 'pokemons_id']);
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('pokemon_id')->constrained('pokemons')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -11,7 +11,6 @@ Route::inertia('/auth', 'auth')->name('login');
 
 
 Route::post('/users/authenticate/new', [UserController::class, 'create']);
-Route::post('/cards/open', [CollectionController::class, 'getCards'])->name('cards.open');
 
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -19,4 +18,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/users/addCoins', [UserController::class, 'addCoins'])->name('users.addCoins');
     Route::post('/dbCreateTypes', [TypeController::class, 'createTypes'])->name('type.create');
     Route::post('/dbCreatePokemon', [PokemonController::class, 'createPokemon'])->name('pokemons.create');
+    Route::post('/cards/open', [CollectionController::class, 'getCards'])->name('cards.open');
+    Route::get('/collection', [CollectionController::class, 'showCollection']);
 });

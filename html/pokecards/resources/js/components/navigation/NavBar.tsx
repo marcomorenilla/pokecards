@@ -1,4 +1,4 @@
-import { router } from '@inertiajs/react';
+import { Link, router } from '@inertiajs/react';
 import React, { useEffect, useRef, useState } from 'react';
 import AddCoinsModal from '../modals/AddCoinsModal';
 
@@ -9,7 +9,7 @@ interface NavProps {
 export function NavBar({ coins, onAddCoins }: NavProps) {
     return (
         <>
-            <nav className="fixed right-0 bottom-0 left-0 z-2 mb-1 flex w-96 max-w-screen items-center justify-center justify-self-center rounded-xl border border-yellow-600/50 bg-gray-700 p-3 lg:relative lg:left-0 lg:w-full lg:justify-between">
+            <nav className="fixed right-0 bottom-0 left-0 z-2 mb-1 flex w-96 max-w-screen items-center justify-center justify-self-center rounded-xl border border-yellow-600/50 bg-gray-700 p-3 lg:relative lg:w-auto lg:justify-between">
                 <section className="hidden items-center justify-center gap-2 lg:flex">
                     <svg
                         fill="#f5f5f5"
@@ -27,76 +27,86 @@ export function NavBar({ coins, onAddCoins }: NavProps) {
                     </h1>
                 </section>
                 <section className="flex gap-2 font-bold text-yellow-500">
-                    <article
-                        tabIndex={-1}
-                        className="group flex cursor-pointer items-center gap-1 rounded-xl p-2 hover:bg-gray-600 hover:text-white focus:bg-gray-600 focus:text-white"
+                    <Link
+                        href="/"
+                        className="hidden group-focus-within:text-white lg:block"
                     >
-                        <svg
-                            width="30px"
-                            height="30px"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
+                        <article
+                            tabIndex={-1}
+                            className="group flex cursor-pointer items-center gap-1 rounded-xl p-2 hover:bg-gray-600 hover:text-white focus:bg-gray-600 focus:text-white"
                         >
-                            <path
-                                d="M15 14V17.6C15 18.4401 15 18.8601 14.8365 19.181C14.6927 19.4632 14.4632 19.6927 14.181 19.8365C13.8601 20 13.4401 20 12.6 20H7.40001C6.55994 20 6.1399 20 5.81903 19.8365C5.53679 19.6927 5.30731 19.4632 5.1635 19.181C5.00001 18.8601 5.00001 18.4401 5.00001 17.6V10M19 10V20M5.00001 16H15M5.55778 4.88446L3.5789 8.84223C3.38722 9.22559 3.29138 9.41727 3.3144 9.57308C3.3345 9.70914 3.40976 9.8309 3.52246 9.90973C3.65153 10 3.86583 10 4.29444 10H19.7056C20.1342 10 20.3485 10 20.4776 9.90973C20.5903 9.8309 20.6655 9.70914 20.6856 9.57308C20.7086 9.41727 20.6128 9.22559 20.4211 8.84223L18.4422 4.88446C18.2817 4.5634 18.2014 4.40287 18.0817 4.28558C17.9758 4.18187 17.8482 4.10299 17.7081 4.05465C17.5496 4 17.3701 4 17.0112 4H6.98887C6.62991 4 6.45043 4 6.29198 4.05465C6.15185 4.10299 6.02422 4.18187 5.91833 4.28558C5.79858 4.40287 5.71832 4.5634 5.55778 4.88446Z"
-                                stroke="#ffcb05"
-                                className="group-focus:stroke-white"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                            />
-                        </svg>
-                        <h2 className="hidden group-focus:text-white lg:block">
+                            <svg
+                                width="30px"
+                                height="30px"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    d="M15 14V17.6C15 18.4401 15 18.8601 14.8365 19.181C14.6927 19.4632 14.4632 19.6927 14.181 19.8365C13.8601 20 13.4401 20 12.6 20H7.40001C6.55994 20 6.1399 20 5.81903 19.8365C5.53679 19.6927 5.30731 19.4632 5.1635 19.181C5.00001 18.8601 5.00001 18.4401 5.00001 17.6V10M19 10V20M5.00001 16H15M5.55778 4.88446L3.5789 8.84223C3.38722 9.22559 3.29138 9.41727 3.3144 9.57308C3.3345 9.70914 3.40976 9.8309 3.52246 9.90973C3.65153 10 3.86583 10 4.29444 10H19.7056C20.1342 10 20.3485 10 20.4776 9.90973C20.5903 9.8309 20.6655 9.70914 20.6856 9.57308C20.7086 9.41727 20.6128 9.22559 20.4211 8.84223L18.4422 4.88446C18.2817 4.5634 18.2014 4.40287 18.0817 4.28558C17.9758 4.18187 17.8482 4.10299 17.7081 4.05465C17.5496 4 17.3701 4 17.0112 4H6.98887C6.62991 4 6.45043 4 6.29198 4.05465C6.15185 4.10299 6.02422 4.18187 5.91833 4.28558C5.79858 4.40287 5.71832 4.5634 5.55778 4.88446Z"
+                                    stroke="#ffcb05"
+                                    className="group-focus-within:stroke-white"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                />
+                            </svg>
                             Tienda
-                        </h2>
-                    </article>
-                    <article
-                        tabIndex={-1}
-                        className="group flex cursor-pointer items-center gap-1 rounded-xl p-2 hover:bg-gray-600 hover:text-white focus:bg-gray-600"
+                        </article>
+                    </Link>
+                    <Link
+                        href="/collection"
+                        className="hidden group-focus-within:text-white lg:block"
                     >
-                        <svg
-                            className="group-focus:fill-white"
-                            fill="#ffcb05"
-                            width="24px"
-                            height="24px"
-                            viewBox="0 0 32 32"
-                            version="1.1"
-                            xmlns="http://www.w3.org/2000/svg"
+                        <article
+                            tabIndex={-1}
+                            className="group flex cursor-pointer items-center gap-1 rounded-xl p-2 focus-within:bg-gray-600 hover:bg-gray-600 hover:text-white"
                         >
-                            <path
-                                d="M30 32h-10c-1.105 0-2-0.895-2-2v-10c0-1.105 0.895-2 2-2h10c1.105 0 2 0.895 2 2v10c0 1.105-0.895 2-2 2zM30 20h-10v10h10v-10zM30 14h-10c-1.105 0-2-0.896-2-2v-10c0-1.105 0.895-2 2-2h10c1.105 0 2 0.895 2 2v10c0 1.104-0.895 2-2 2zM30 2h-10v10h10v-10zM12 32h-10c-1.105 0-2-0.895-2-2v-10c0-1.105 0.895-2 2-2h10c1.104 0 2 0.895 2 2v10c0 1.105-0.896 2-2 2zM12 20h-10v10h10v-10zM12 14h-10c-1.105 0-2-0.896-2-2v-10c0-1.105 0.895-2 2-2h10c1.104 0 2 0.895 2 2v10c0 1.104-0.896 2-2 2zM12 2h-10v10h10v-10z"
-                                className="group-focus:stroke-white"
-                                stroke="#ffcb05"
-                                strokeWidth="1"
-                            ></path>
-                        </svg>
-                        <h2 className="hidden group-focus:text-white lg:block">
+                            <svg
+                                className="group-focus-within:fill-white"
+                                fill="#ffcb05"
+                                width="24px"
+                                height="24px"
+                                viewBox="0 0 32 32"
+                                version="1.1"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    d="M30 32h-10c-1.105 0-2-0.895-2-2v-10c0-1.105 0.895-2 2-2h10c1.105 0 2 0.895 2 2v10c0 1.105-0.895 2-2 2zM30 20h-10v10h10v-10zM30 14h-10c-1.105 0-2-0.896-2-2v-10c0-1.105 0.895-2 2-2h10c1.105 0 2 0.895 2 2v10c0 1.104-0.895 2-2 2zM30 2h-10v10h10v-10zM12 32h-10c-1.105 0-2-0.895-2-2v-10c0-1.105 0.895-2 2-2h10c1.104 0 2 0.895 2 2v10c0 1.105-0.896 2-2 2zM12 20h-10v10h10v-10zM12 14h-10c-1.105 0-2-0.896-2-2v-10c0-1.105 0.895-2 2-2h10c1.104 0 2 0.895 2 2v10c0 1.104-0.896 2-2 2zM12 2h-10v10h10v-10z"
+                                    className="group-focus-within:stroke-white"
+                                    stroke="#ffcb05"
+                                    strokeWidth="1"
+                                ></path>
+                            </svg>
                             Colección
-                        </h2>
-                    </article>
-                    <article
-                        tabIndex={-1}
-                        className="group flex cursor-pointer items-center gap-1 rounded-xl p-2 hover:bg-gray-600 hover:text-white focus:bg-gray-600"
+                        </article>
+                    </Link>
+                    <Link
+                        href="/"
+                        className="hidden group-focus-within:text-white lg:block"
                     >
-                        <svg
-                            className="group-focus:fill-white"
-                            fill="#ffcb05"
-                            version="1.1"
-                            id="Capa_1"
-                            width="25px"
-                            height="25px"
-                            viewBox="0 0 417.938 417.938"
+                        <article
+                            tabIndex={-1}
+                            className="group flex cursor-pointer items-center gap-1 rounded-xl p-2 focus-within:bg-gray-600 hover:bg-gray-600 hover:text-white"
                         >
-                            <g>
+                            <svg
+                                className="group-focus-within:fill-white"
+                                fill="#ffcb05"
+                                version="1.1"
+                                id="Capa_1"
+                                width="25px"
+                                height="25px"
+                                viewBox="0 0 417.938 417.938"
+                            >
                                 <g>
-                                    <circle
-                                        cx="151.631"
-                                        cy="344.928"
-                                        r="9.186"
-                                    />
-                                    <path
-                                        d="M386.59,287.144c0-4.494-1.548-8.6-4.068-11.938c1.838-2.908,2.944-6.331,2.944-10.017V29.565
+                                    <g>
+                                        <circle
+                                            cx="151.631"
+                                            cy="344.928"
+                                            r="9.186"
+                                        />
+                                        <path
+                                            d="M386.59,287.144c0-4.494-1.548-8.6-4.068-11.938c1.838-2.908,2.944-6.331,2.944-10.017V29.565
 			c0-16.294-13.26-29.56-29.563-29.565H162.377c-16.289,0.005-29.549,13.271-29.56,29.565v28.221H62.035
 			c-16.29,0.005-29.549,13.271-29.56,29.564v234.276c0,4.012,1.283,7.713,3.43,10.772c-2.8,3.438-4.559,7.759-4.559,12.524
 			c0,4.594,1.627,8.788,4.256,12.164c-1.913,2.939-3.063,6.42-3.076,10.183l-0.057,21.113c0.005,16.295,13.271,29.555,29.565,29.555
@@ -122,19 +132,18 @@ export function NavBar({ coins, onAddCoins }: NavProps) {
 			h62.378c1.475,0,2.688-1.207,2.688-2.688v-21.051c0-4.451,3.612-8.063,8.063-8.063s8.063,3.612,8.063,8.063V330.588z
 			 M366.653,296.329c-5.076,0-9.188-4.115-9.188-9.186c0-5.082,4.111-9.188,9.188-9.188c5.075,0,9.186,4.105,9.186,9.188
 			C375.839,292.214,371.729,296.329,366.653,296.329z"
-                                    />
-                                    <circle
-                                        cx="102.361"
-                                        cy="344.928"
-                                        r="9.186"
-                                    />
+                                        />
+                                        <circle
+                                            cx="102.361"
+                                            cy="344.928"
+                                            r="9.186"
+                                        />
+                                    </g>
                                 </g>
-                            </g>
-                        </svg>
-                        <h2 className="hidden group-focus:text-white lg:block">
+                            </svg>
                             Mazo
-                        </h2>
-                    </article>
+                        </article>
+                    </Link>
                 </section>
                 <section className="flex items-center gap-2">
                     <div className="flex items-center gap-1 rounded-xl bg-gray-600 p-1 font-bold text-yellow-500">

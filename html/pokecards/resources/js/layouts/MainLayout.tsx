@@ -9,16 +9,16 @@ export default function MainLayout({ auth, children }: any) {
     const { user } = auth;
     const { coins } = user;
     return (
-        <>
-            <NavBar coins={coins} onAddCoins={handleDialog} />
-            <main className="min-h-screen bg-radial-[at_0%_0%] from-[#222] to-[#000c] to-90% p-3">
-                {children}
-            </main>
+        <div className="flex min-h-screen flex-col bg-radial-[at_0%_0%] from-[#222] to-[#000c] to-90%">
+            <div className="p-3">
+                <NavBar coins={coins} onAddCoins={handleDialog} />
+            </div>
+            <main className="flex-1 p-3">{children}</main>
             <Footer />
             <AddCoinsModal
                 isDialogOpen={isDialogOpen}
                 onHandleDialog={handleDialog}
             />
-        </>
+        </div>
     );
 }

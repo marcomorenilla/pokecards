@@ -1,4 +1,3 @@
-/* eslint-disable @stylistic/padding-line-between-statements */
 export function registerReducer(state: any, { type, data }: any) {
     console.log('registerReducer', type, data);
     switch (type) {

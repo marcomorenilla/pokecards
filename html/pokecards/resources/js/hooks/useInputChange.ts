@@ -1,11 +1,10 @@
-/* eslint-disable @stylistic/padding-line-between-statements */
 import { useReducer, useState } from 'react';
-import { registerReducer } from '@/reducers/registerReducer';
+import { registerReducer } from '@/js/reducers/registerReducer';
 import {
     validateMail,
     validatePassword,
     validateUserName,
-} from '@/services/fieldsValidator';
+} from '@/js/services/fieldsValidator';
 
 const initialErrorState = {
     emailError: '',

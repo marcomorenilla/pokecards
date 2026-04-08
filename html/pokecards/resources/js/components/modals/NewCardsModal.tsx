@@ -32,7 +32,11 @@ export function NewCardsModal({
             <div className="flex h-full items-center justify-center text-white">
                 <div className="animate-opacity flex h-auto w-1/2 flex-col items-center justify-start gap-3 rounded-xl bg-gray-600 p-5 shadow-[0px_0px_20px_20px] shadow-cyan-500">
                     <h1 className="text-3xl font-bold">SOBRE CONSEGUIDO</h1>
-                    <PokemonCard key={pokemon.id} pokemon={pokemon} />
+                    <PokemonCard
+                        parent="modal"
+                        key={pokemon.id}
+                        pokemon={pokemon}
+                    />
                     <button
                         onClick={handleNextCard}
                         className="w-full rounded-xl bg-yellow-500 p-2 text-xl font-bold hover:bg-yellow-600"

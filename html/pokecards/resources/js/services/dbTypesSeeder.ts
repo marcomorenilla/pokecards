@@ -24,51 +24,52 @@ const typeColors: any = {
 };
 
 export async function dbTypesSeeder() {
-    //Coger todos los tipos,
-    const types = await getAllTypes();
+    const typesData = await getAllTypes();
+    if (!typesData) return { dbTypes: [], typeMap: {} };
+    
+    const { results } = typesData;
 
-    const { results } = types;
+    const typeMap: Record<string, string> = {};
 
-    const dbTypes = [];
-    for (const type of results) {
-        //Quedarme con los nombres
-        const tplType: any = {};
-        const { name, url } = type;
-        //Añadir el color
-        tplType['type_color'] = typeColors[name];
-        //Traducirlos al castellano
-        const initType = await getType(url);
-        const { names } = initType;
-        const spanishType = names.find(
-            (type: any) => type.language.name == 'es',
-        );
-        //Quedarme con el nombre
-        tplType['type'] = spanishType.name;
-        dbTypes.push(tplType);
-    }
-    return dbTypes;
+    const dbTypes = await Promise.all(
+        results.map(async (type: any) => {
+            const { name, url } = type;
+            const details = await getType(url);
+            
+            const spanishName = details?.names.find(
+                (n: any) => n.language.name === 'es'
+            )?.name || name;
+
+            typeMap[name] = spanishName;
+
+            return {
+                type: spanishName,
+                type_color: typeColors[name] || '#777777',
+            };
+        })
+    );
+
+    return { dbTypes, typeMap };
 }
+
 async function getAllTypes() {
     try {
         const request = await fetch('https://pokeapi.co/api/v2/type/');
         if (request.ok) {
-            const response = await request.json();
-            return response;
+            return await request.json();
         }
     } catch (err) {
-        console.error(err);
+        console.error('Error al obtener tipos:', err);
     }
 }
 
 async function getType(url: string) {
     try {
         const request = await fetch(url);
-
         if (request.ok) {
-            const response = await request.json();
-            return response;
+            return await request.json();
         }
     } catch (err) {
-        console.error(err);
+        console.error('Error al obtener detalle del tipo:', err);
     }
 }

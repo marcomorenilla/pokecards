@@ -1,9 +1,9 @@
 /* eslint-disable import/order */
 import React, { useEffect, useState } from 'react';
-import { useInputChange } from '@/hooks/useInputChange';
+import { useInputChange } from '@/js/hooks/useInputChange';
 import ActionButton from './ActionButton';
-import { FormInput } from './auth/FormInput';
-import { getAuthenticatedUser } from '@/services/authService';
+import { FormInput } from './FormInput';
+import { getAuthenticatedUser } from '@/js/services/authService';
 import { router } from '@inertiajs/react';
 
 interface LoginProps {
