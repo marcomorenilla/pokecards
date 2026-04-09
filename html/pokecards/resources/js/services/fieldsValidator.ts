@@ -1,6 +1,5 @@
 export const validateMail = (email: string) => {
     const emailRegex = /^\w+@\w+\.(com|org|es|dev)$/;
-    console.log('validating mail', email);
 
     const isErrored = !emailRegex.test(email);
 
@@ -15,10 +14,7 @@ export const validateMail = (email: string) => {
 export const validatePassword = (password: string) => {
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*\W).{6,}$/;
 
-    console.log('validating password', password);
-
     const isErrored = !passwordRegex.test(password);
-    console.log('resultado de validación', passwordRegex.test(password));
 
     return {
         error: isErrored,

@@ -30,14 +30,6 @@ export function LoginForm({ handleFormVisibility }: LoginProps) {
         }, 500);
     }, []);
 
-    const handleGetUsers = async (data: any) => {
-        try {
-            const currentUser = await getAuthenticatedUser(data);
-        } catch (error) {
-            console.log('Login-form handle-get-users error', error);
-        }
-    };
-
     const handleSubmit = (e: React.SubmitEvent) => {
         e.preventDefault();
 
@@ -48,11 +40,7 @@ export function LoginForm({ handleFormVisibility }: LoginProps) {
             password: formData.get('password'),
         };
         handleReset(initialState);
-        router.post('/api/users/authenticate', data, {
-            onSuccess: () => {
-                console.log('success');
-            },
-        });
+        router.post('/api/users/authenticate', data, {});
     };
 
     return (

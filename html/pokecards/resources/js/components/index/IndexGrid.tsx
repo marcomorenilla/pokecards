@@ -17,7 +17,6 @@ export function IndexGrid({ coins }: CoinsProps) {
     const [packContent, setPackContent] = useState(initialPackContent);
 
     useEffect(() => {
-        console.log('changing card content: ', packContent);
         setCardIndex(0);
     }, [packContent]);
 
@@ -51,8 +50,6 @@ export function IndexGrid({ coins }: CoinsProps) {
 
     const handleNextCard = () => {
         if (cardIndex < packContent.length - 1) {
-            console.log('current cardIndex', cardIndex);
-            console.log('current packContent length', packContent.length);
             setCardIndex(cardIndex + 1);
         } else {
             setCardIndex(0);

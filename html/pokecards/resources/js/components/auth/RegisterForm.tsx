@@ -37,7 +37,6 @@ export function RegisterForm({ handleFormVisibility }: RegisterProps) {
         try {
             router.post('/users/authenticate/new', data, {
                 onSuccess: () => {
-                    console.log('Usuario registrado:', data);
                     handleFormVisibility();
                 },
             });

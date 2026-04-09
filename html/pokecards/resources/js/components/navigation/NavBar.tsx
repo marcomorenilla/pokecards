@@ -7,9 +7,12 @@ interface NavProps {
     onAddCoins: () => void;
 }
 export function NavBar({ coins, onAddCoins }: NavProps) {
+    const handleLogout = () => {
+        router.get('/logout');
+    };
     return (
         <>
-            <nav className="fixed right-0 bottom-0 left-0 z-2 mb-1 flex w-96 max-w-screen items-center justify-center justify-self-center rounded-xl border border-yellow-600/50 bg-gray-700 p-3 lg:relative lg:w-auto lg:justify-between">
+            <nav className="fixed right-0 bottom-0 left-0 z-2 mb-1 flex w-auto max-w-screen items-center justify-between justify-self-center rounded-xl border border-yellow-600/50 bg-gray-700 p-3 lg:relative lg:w-auto lg:justify-between">
                 <section className="hidden items-center justify-center gap-2 lg:flex">
                     <svg
                         fill="#f5f5f5"
@@ -26,11 +29,8 @@ export function NavBar({ coins, onAddCoins }: NavProps) {
                         POKECARDS
                     </h1>
                 </section>
-                <section className="flex gap-2 font-bold text-yellow-500">
-                    <Link
-                        href="/"
-                        className="hidden group-focus-within:text-white lg:block"
-                    >
+                <section className="flex items-center gap-2 font-bold text-yellow-500">
+                    <Link href="/" className="focus:text-white lg:block">
                         <article
                             tabIndex={-1}
                             className="group flex cursor-pointer items-center gap-1 rounded-xl p-2 hover:bg-gray-600 hover:text-white focus:bg-gray-600 focus:text-white"
@@ -51,12 +51,14 @@ export function NavBar({ coins, onAddCoins }: NavProps) {
                                     strokeLinejoin="round"
                                 />
                             </svg>
-                            Tienda
+                            <h2 className="hidden group-focus-within:text-white lg:block">
+                                Tienda
+                            </h2>
                         </article>
                     </Link>
                     <Link
                         href="/collection"
-                        className="hidden group-focus-within:text-white lg:block"
+                        className="focus:text-white lg:block"
                     >
                         <article
                             tabIndex={-1}
@@ -78,13 +80,13 @@ export function NavBar({ coins, onAddCoins }: NavProps) {
                                     strokeWidth="1"
                                 ></path>
                             </svg>
-                            Colección
+
+                            <h2 className="hidden group-focus-within:text-white lg:block">
+                                Colección
+                            </h2>
                         </article>
                     </Link>
-                    <Link
-                        href="/"
-                        className="hidden group-focus-within:text-white lg:block"
-                    >
+                    <Link href="/" className="focus:text-white lg:block">
                         <article
                             tabIndex={-1}
                             className="group flex cursor-pointer items-center gap-1 rounded-xl p-2 focus-within:bg-gray-600 hover:bg-gray-600 hover:text-white"
@@ -141,12 +143,46 @@ export function NavBar({ coins, onAddCoins }: NavProps) {
                                     </g>
                                 </g>
                             </svg>
-                            Mazo
+                            <h2 className="hidden group-focus-within:text-white lg:block">
+                                Mazo
+                            </h2>
                         </article>
                     </Link>
                 </section>
-                <section className="flex items-center gap-2">
-                    <div className="flex items-center gap-1 rounded-xl bg-gray-600 p-1 font-bold text-yellow-500">
+                <section className="flex items-center justify-end gap-5">
+                    <button
+                        onClick={handleLogout}
+                        className="cursor-pointer rounded-xl stroke-[#ffcb05] p-1 hover:scale-125 hover:bg-gray-600 [&_svg]:stroke-[#ffcb05] hover:[&_svg]:stroke-white"
+                    >
+                        <svg
+                            width="30px"
+                            stroke="currentColor"
+                            height="30px"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                d="M21 12L13 12"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            />
+                            <path
+                                d="M18 15L20.913 12.087V12.087C20.961 12.039 20.961 11.961 20.913 11.913V11.913L18 9"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            />
+                            <path
+                                d="M16 5V4.5V4.5C16 3.67157 15.3284 3 14.5 3H5C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H14.5C15.3284 21 16 20.3284 16 19.5V19.5V19"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            />
+                        </svg>
+                    </button>
+                    <div className="flex items-center justify-end gap-1 rounded-xl bg-gray-600 p-1 font-bold text-yellow-500">
                         <svg
                             width="25px"
                             height="25px"

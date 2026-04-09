@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\PokemonController;
 use App\Http\Controllers\TypeController;
@@ -20,4 +21,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/dbCreatePokemon', [PokemonController::class, 'createPokemon'])->name('pokemons.create');
     Route::post('/cards/open', [CollectionController::class, 'getCards'])->name('cards.open');
     Route::get('/collection', [CollectionController::class, 'showCollection']);
+    Route::get('/logout', [AuthController::class, 'logout'])->middleware('auth');
 });

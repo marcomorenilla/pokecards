@@ -14,10 +14,8 @@ export default function AddCoinsModal({
 
     useEffect(() => {
         if (isDialogOpen) {
-            console.log('order received, showing');
             dialogRef.current?.showModal();
         } else {
-            console.log('order processed closing');
             dialogRef.current?.close();
         }
     }, [isDialogOpen]);
@@ -27,7 +25,6 @@ export default function AddCoinsModal({
         const formData = new FormData(e.currentTarget);
         const selectedCoins = formData.get('coins') || 0;
 
-        console.log('Cantidad seleccionada:', selectedCoins);
         router.post(
             '/users/addCoins',
             { coins: Number(selectedCoins) },

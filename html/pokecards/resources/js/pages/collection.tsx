@@ -1,11 +1,10 @@
 import React from 'react';
 import ReverseCard from '../components/cards/ReverseCard';
 import MainLayout from '../layouts/MainLayout';
-import CollectionGrid from '../components/collection/CollectionGrid';
+import { CollectionWrapper } from '../components/collection/CollectionWrapper';
 
 export default function Collection({ pokemons }: any) {
-    console.log('mensaje colección', pokemons);
-    return <CollectionGrid pokemons={pokemons} />;
+    return <CollectionWrapper pokemons={pokemons} />;
 }
 
 Collection.layout = (page: any) => {

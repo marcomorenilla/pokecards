@@ -21,7 +21,6 @@ export function useInputChange(state: any, isRegister: boolean = false) {
 
     const handleFormErrors = (data: any) => {
         const { username, password, email } = data;
-        console.log('data', data);
 
         if (username) {
             const validationNameResult = validateUserName(username);
@@ -43,8 +42,6 @@ export function useInputChange(state: any, isRegister: boolean = false) {
     const handleValuesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { target } = e;
         const { name, value } = target;
-        console.log('id', name);
-        console.log('value', value);
 
         setFormValues((prev: object) => {
             const newState = {

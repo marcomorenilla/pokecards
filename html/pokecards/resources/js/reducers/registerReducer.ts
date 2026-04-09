@@ -1,5 +1,4 @@
 export function registerReducer(state: any, { type, data }: any) {
-    console.log('registerReducer', type, data);
     switch (type) {
         case 'email': {
             const { error, message } = data;
