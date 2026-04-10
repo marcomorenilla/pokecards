@@ -3,8 +3,7 @@ import React, { useState } from 'react';
 export function CollectionFilter({
     onInputChange,
     onSelectionChange,
-    onClicked,
-    onCheck,
+    onReverseClick,
 }: any) {
     const [isClicked, setIsClicked] = useState(false);
     const [isChecked, setIsChecked] = useState(false);
@@ -24,13 +23,13 @@ export function CollectionFilter({
 
     const handleClick = () => {
         setIsClicked(!isClicked);
-        onClicked();
+        onReverseClick();
     };
 
     const handleChecked = () => {
-        console.log('click');
         setIsChecked(!isChecked);
-        onCheck();
+        const selectionValue = isChecked ? 'unfiltered' : 'id';
+        onSelectionChange(selectionValue);
     };
     const handleSubmit = (e: React.SubmitEvent) => {
         e.preventDefault();
@@ -42,7 +41,7 @@ export function CollectionFilter({
             <form
                 id="filterForm"
                 onSubmit={handleSubmit}
-                className="flexWrap relative flex items-center justify-start gap-2"
+                className="relative flex flex-wrap items-center justify-start gap-2"
             >
                 <section className="group relative grow-2">
                     <label htmlFor="textFilter"></label>
@@ -92,7 +91,7 @@ export function CollectionFilter({
                         name="orderCondition"
                         id="orderCondition"
                     >
-                        <option value="">
+                        <option value="unfiltered">
                             Selecciona criterio de ordenación...
                         </option>
                         <option value="id">Ordenar por ID</option>

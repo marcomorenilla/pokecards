@@ -23,7 +23,7 @@ export function CollectionInfo({ quantity }: any) {
                         ></path>
                     </svg>
                     <div className="">
-                        <h1 className="text-2xl font-black text-white">
+                        <h1 className="text-4xl font-black text-white">
                             COLECCIÓN
                         </h1>
                         <h3 className="text-gray-500">

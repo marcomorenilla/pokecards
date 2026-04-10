@@ -5,5 +5,5 @@ interface BadgeProps {
 }
 
 export function TypeBadge({ children }: BadgeProps) {
-    return <div className="w-fit rounded-xl bg-white/30 p-1">{children}</div>;
+    return <div className="w-fit rounded-xl p-1">{children}</div>;
 }

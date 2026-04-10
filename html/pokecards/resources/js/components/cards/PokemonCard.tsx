@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import '@/css/animate.css';
 import { TypeBadge } from './TypeBadge';
+import { useCardContext } from '@/js/hooks/useCardContext';
 
 interface PokemonType {
     type: string;
@@ -76,6 +77,11 @@ const cardConfig: any = {
 };
 
 export function PokemonCard({ pokemon, parent, quantity }: CardProps) {
+    const { onCardClick } = useCardContext() || {};
+
+    const handleCardClick = () => {
+        if (onCardClick) onCardClick(pokemon);
+    };
     const {
         id,
         pokeapi_id,
@@ -125,10 +131,11 @@ export function PokemonCard({ pokemon, parent, quantity }: CardProps) {
     return (
         <div className="relative">
             <article
+                onClick={handleCardClick}
                 style={{
                     background: `linear-gradient(to bottom right, ${primary}, ${secondary})`,
                 }}
-                className={`animate-opacity relative max-w-100 ${cardHeight} overflow-hidden rounded-xl p-3`}
+                className={`${onCardClick ? 'cursor-pointer' : ''} animate-opacity relative flex max-w-100 flex-col ${cardHeight} overflow-hidden rounded-xl p-3`}
             >
                 <section
                     className={`flex items-center justify-between ${mainTextSize} font-bold text-gray-700`}
@@ -166,16 +173,14 @@ export function PokemonCard({ pokemon, parent, quantity }: CardProps) {
                         <p>{weight / 10}kg</p>
                     </div>
                 </section>
-                <section>
+                <section className="h-24">
                     <p
-                        className={`mt-2 h-auto rounded-xl ${mainTextSize} bg-white/30 p-1 text-gray-600 italic`}
+                        className={`mt-1 h-auto rounded-xl ${mainTextSize} bg-white/30 p-1 text-gray-600 italic`}
                     >
                         "{description}"
                     </p>
                 </section>
-                <section
-                    className={`${mainTextSize} mt-2 font-bold text-gray-800`}
-                >
+                <section className={`${mainTextSize} font-bold text-gray-800`}>
                     <div className="flex items-center gap-1 border-b border-gray-600 p-1">
                         <div className="size-1 rounded-full bg-gray-600"></div>
 
@@ -187,7 +192,7 @@ export function PokemonCard({ pokemon, parent, quantity }: CardProps) {
                     </div>
                 </section>
                 <section
-                    className={`mt-2 flex ${mainTextSize} items-center justify-between p-1 font-bold text-gray-700`}
+                    className={`flex ${mainTextSize} items-center justify-between p-1 font-bold text-gray-700`}
                 >
                     <div className="text-center">
                         <p className="text-gray-600">AT.</p>
@@ -207,7 +212,7 @@ export function PokemonCard({ pokemon, parent, quantity }: CardProps) {
                     </div>
                 </section>
                 <section
-                    className={`${badgeTextSize} mt-1 flex justify-center gap-1 font-bold text-gray-600`}
+                    className={`${badgeTextSize} mt-1 flex justify-center gap-1 font-bold text-gray-600 [&_div]:bg-white/10`}
                 >
                     {types.map((type) => {
                         return (

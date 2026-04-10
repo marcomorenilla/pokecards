@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { PokemonCard } from '../cards/PokemonCard';
+import { PokemonCard } from '@/js/components/cards/PokemonCard';
 import '@/css/animate.css';
 
 interface NewCardsModalProps {
@@ -36,6 +36,7 @@ export function NewCardsModal({
                         parent="modal"
                         key={pokemon.id}
                         pokemon={pokemon}
+                        quantity={1}
                     />
                     <button
                         onClick={handleNextCard}
