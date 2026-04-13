@@ -14,7 +14,7 @@ export default function CollectionGrid({
         });
     });
     return (
-        <section className="grid grid-cols-1 content-center gap-10 p-3 md:grid-cols-3 lg:grid-cols-5">
+        <section className="mx-auto grid w-fit grid-cols-1 gap-10 p-3 md:grid-cols-3 lg:grid-cols-5">
             {isFiltered ? (
                 <CollectionFiltered pokemonObject={pokemonObject} />
             ) : (

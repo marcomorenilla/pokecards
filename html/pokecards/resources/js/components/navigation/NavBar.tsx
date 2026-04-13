@@ -86,7 +86,7 @@ export function NavBar({ coins, onAddCoins }: NavProps) {
                             </h2>
                         </article>
                     </Link>
-                    <Link href="/" className="focus:text-white lg:block">
+                    <Link href="/maze" className="focus:text-white lg:block">
                         <article
                             tabIndex={-1}
                             className="group flex cursor-pointer items-center gap-1 rounded-xl p-2 focus-within:bg-gray-600 hover:bg-gray-600 hover:text-white"

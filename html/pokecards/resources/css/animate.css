@@ -18,6 +18,10 @@
     animation: pulse 3s infinite ease-in-out;
 }
 
+.animate-stats {
+    animation: stats 2s ease-in-out;
+}
+
 @keyframes jump {
     0% {
         transform: translateY(0px);
@@ -73,5 +77,14 @@
     }
     100% {
         opacity: 0.8;
+    }
+}
+
+@keyframes stats {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(0);
     }
 }

@@ -11,7 +11,7 @@ export function CollectionWrapper({ pokemons: initialPokemons }: any) {
     const [filterText, setFilterText] = useState('');
     const [sortCriteria, setSortCriteria] = useState('');
     const [isDialogOpen, setIsDialogOpen] = useState(false);
-    const [pokemon, setPokemon] = useState({});
+    const [pokemon, setPokemon] = useState(initialPokemons[0].pokemons);
 
     useEffect(() => {
         if (sortCriteria == 'unfiltered') setIsFiltered(false);
@@ -68,15 +68,20 @@ export function CollectionWrapper({ pokemons: initialPokemons }: any) {
         setIsReverse(!isReverse);
     };
 
-    const handleCardClick = (pokemon: any) => {
-        setIsDialogOpen(!isDialogOpen);
+    const handleOpenDialog = (pokemon: any) => {
+        console.log(isDialogOpen);
+        setIsDialogOpen(true);
         setPokemon(pokemon);
+    };
+
+    const handleCloseDialog = () => {
+        setIsDialogOpen(false);
     };
 
     return (
         <>
             <CollectionInfo quantity={displayedPokemons.length} />
-            <CardContext.Provider value={{ onCardClick: handleCardClick }}>
+            <CardContext.Provider value={{ onCardClick: handleOpenDialog }}>
                 <CollectionFilter
                     onInputChange={handleInputChange}
                     onSelectionChange={handleSelectionChange}
@@ -90,7 +95,7 @@ export function CollectionWrapper({ pokemons: initialPokemons }: any) {
             <PokemonStatsModal
                 isDialogOpen={isDialogOpen}
                 pokemon={pokemon}
-                handleDialog={handleCardClick}
+                handleDialog={handleCloseDialog}
             />
         </>
     );

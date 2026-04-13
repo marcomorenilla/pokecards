@@ -29,8 +29,8 @@ export function NewCardsModal({
             onClose={handleDialog}
             className="h-screen max-h-none w-screen max-w-none bg-transparent backdrop-blur-lg"
         >
-            <div className="flex h-full items-center justify-center text-white">
-                <div className="animate-opacity flex h-auto w-1/2 flex-col items-center justify-start gap-3 rounded-xl bg-gray-600 p-5 shadow-[0px_0px_20px_20px] shadow-cyan-500">
+            <div className="flex h-full w-full items-center justify-center text-white">
+                <div className="animate-opacity flex h-auto w-auto flex-col items-center justify-start gap-3 rounded-xl bg-gray-600 p-5 shadow-[0px_0px_20px_20px] shadow-cyan-500 md:w-3/5">
                     <h1 className="text-3xl font-bold">SOBRE CONSEGUIDO</h1>
                     <PokemonCard
                         parent="modal"
@@ -40,7 +40,7 @@ export function NewCardsModal({
                     />
                     <button
                         onClick={handleNextCard}
-                        className="w-full rounded-xl bg-yellow-500 p-2 text-xl font-bold hover:bg-yellow-600"
+                        className="w-3/5 rounded-xl bg-yellow-500 p-2 text-xl font-bold hover:bg-yellow-600"
                     >
                         Siguiente carta
                     </button>

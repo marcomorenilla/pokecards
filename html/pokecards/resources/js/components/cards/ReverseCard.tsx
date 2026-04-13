@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 export default function ReverseCard() {
     return (
-        <article className="animate-reverse h-90 w-auto rounded-xl border border-blue-300 bg-gray-600 p-5 text-white">
+        <article className="animate-reverse aspect-2/3 h-90 w-auto rounded-xl border border-blue-300 bg-gray-600 p-5 text-white">
             <div className="flex h-full flex-col items-center justify-center gap-3 rounded-xl border-3 border-gray-300">
                 <svg
                     fill="#ffcb05"

@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { use, useEffect, useState } from 'react';
 import '@/css/animate.css';
 import { TypeBadge } from './TypeBadge';
 import { useCardContext } from '@/js/hooks/useCardContext';
+import { useMazeContext } from '@/js/hooks/useMazeContext';
 
 interface PokemonType {
     type: string;
@@ -78,9 +79,24 @@ const cardConfig: any = {
 
 export function PokemonCard({ pokemon, parent, quantity }: CardProps) {
     const { onCardClick } = useCardContext() || {};
+    const { onCardDrag, onEndDrag } = useMazeContext() || {};
+    const [isDragging, setIsDragging] = useState(false);
 
     const handleCardClick = () => {
         if (onCardClick) onCardClick(pokemon);
+    };
+
+    const handleCardDrag = (e: any) => {
+        if (onCardDrag) {
+            setIsDragging(true);
+            onCardDrag(pokemon);
+        }
+    };
+    const handleEndDrag = () => {
+        if (onEndDrag) {
+            setIsDragging(false);
+            onEndDrag();
+        }
     };
     const {
         id,
@@ -129,13 +145,18 @@ export function PokemonCard({ pokemon, parent, quantity }: CardProps) {
     let secondary = cardType.color || types[1]?.type_color || primary + 80;
 
     return (
-        <div className="relative">
+        <div
+            onClick={handleCardClick}
+            onDrag={handleCardDrag}
+            onDragEnd={handleEndDrag}
+            draggable={onCardDrag ? true : false}
+            className={`draggable relative ${onCardDrag && !isDragging ? 'cursor-grab' : ''} ${isDragging ? 'pointer-events-none cursor-grabbing' : ''} `}
+        >
             <article
-                onClick={handleCardClick}
                 style={{
                     background: `linear-gradient(to bottom right, ${primary}, ${secondary})`,
                 }}
-                className={`${onCardClick ? 'cursor-pointer' : ''} animate-opacity relative flex max-w-100 flex-col ${cardHeight} overflow-hidden rounded-xl p-3`}
+                className={`${onCardClick ? 'cursor-pointer' : ''} is-dragging animate-opacity relative flex aspect-2/3 max-w-100 flex-col ${cardHeight} overflow-hidden rounded-xl p-3`}
             >
                 <section
                     className={`flex items-center justify-between ${mainTextSize} font-bold text-gray-700`}
@@ -159,11 +180,13 @@ export function PokemonCard({ pokemon, parent, quantity }: CardProps) {
                     >
                         {cardType.label}
                     </p>
-                    <div className="flex justify-center">
+                    <div
+                        className={`flex ${onCardDrag ? 'pointer-events-none' : ''} justify-center`}
+                    >
                         <img
                             src={sprite}
                             alt="Imagen de carta pokemon cargada de Github"
-                            className={`${spriteSize}`}
+                            className={`${spriteSize} `}
                         />
                     </div>
                     <div
