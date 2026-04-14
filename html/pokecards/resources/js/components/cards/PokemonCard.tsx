@@ -75,6 +75,13 @@ const cardConfig: any = {
         mainTextSize: 'text-lg',
         spriteSize: 'size-40',
     },
+    maze: {
+        nameTextSize: 'text-sm',
+        badgeTextSize: 'text-xs',
+        cardHeight: 'h-80',
+        mainTextSize: 'text-[10px]',
+        spriteSize: 'size-10',
+    },
 };
 
 export function PokemonCard({ pokemon, parent, quantity }: CardProps) {
@@ -92,10 +99,10 @@ export function PokemonCard({ pokemon, parent, quantity }: CardProps) {
             onCardDrag(pokemon);
         }
     };
-    const handleEndDrag = () => {
+    const handleEndDrag = (pokemon: any) => {
         if (onEndDrag) {
             setIsDragging(false);
-            onEndDrag();
+            onEndDrag(pokemon);
         }
     };
     const {
@@ -148,7 +155,7 @@ export function PokemonCard({ pokemon, parent, quantity }: CardProps) {
         <div
             onClick={handleCardClick}
             onDrag={handleCardDrag}
-            onDragEnd={handleEndDrag}
+            onDragEnd={() => handleEndDrag(pokemon)}
             draggable={onCardDrag ? true : false}
             className={`draggable relative ${onCardDrag && !isDragging ? 'cursor-grab' : ''} ${isDragging ? 'pointer-events-none cursor-grabbing' : ''} `}
         >

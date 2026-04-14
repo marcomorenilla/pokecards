@@ -21,6 +21,10 @@
 .animate-stats {
     animation: stats 2s ease-in-out;
 }
+.scroll-custom {
+    scrollbar-color: #3b82f6 transparent;
+    scrollbar-width: auto;
+}
 
 @keyframes jump {
     0% {

@@ -1,8 +1,8 @@
 import { MazeWrapper } from '../components/maze/MazeWrapper';
 import MainLayout from '../layouts/MainLayout';
 
-export default function Maze({ pokemons }: any) {
-    return <MazeWrapper pokemons={pokemons} />;
+export default function Maze({ pokemons, auth, maze }: any) {
+    return <MazeWrapper maze={maze} pokemons={pokemons} auth={auth} />;
 }
 
 Maze.layout = (page: any) => {

@@ -24,4 +24,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/collection', [CollectionController::class, 'showCollection']);
     Route::get('/logout', [AuthController::class, 'logout'])->middleware('auth');
     Route::get('/maze', [MazeController::class, 'render']);
+    Route::post('/maze/addToMaze', [MazeController::class, 'addToMaze']);
+    Route::post('/maze/delete', [MazeController::class, 'deleteMaze']);
 });
