@@ -11,8 +11,7 @@ export function CollectionWrapper({ pokemons: initialPokemons }: any) {
     const [filterText, setFilterText] = useState('');
     const [sortCriteria, setSortCriteria] = useState('');
     const [isDialogOpen, setIsDialogOpen] = useState(false);
-    const [pokemon, setPokemon] = useState(initialPokemons[0].pokemons);
-
+    const [pokemon, setPokemon] = useState(null);
     useEffect(() => {
         if (sortCriteria == 'unfiltered') setIsFiltered(false);
     }, [sortCriteria]);
@@ -81,22 +80,32 @@ export function CollectionWrapper({ pokemons: initialPokemons }: any) {
     return (
         <>
             <CollectionInfo quantity={displayedPokemons.length} />
-            <CardContext.Provider value={{ onCardClick: handleOpenDialog }}>
-                <CollectionFilter
-                    onInputChange={handleInputChange}
-                    onSelectionChange={handleSelectionChange}
-                    onReverseClick={handleReverse}
+            {initialPokemons.length == 0 && (
+                <h2 className="animate-opacity mt-10 text-3xl font-bold text-white">
+                    Compra un sobre, empieza la colección y conviertete en el
+                    mejor entrenador Pokémon de la historia
+                </h2>
+            )}
+            {initialPokemons.length > 0 && (
+                <CardContext.Provider value={{ onCardClick: handleOpenDialog }}>
+                    <CollectionFilter
+                        onInputChange={handleInputChange}
+                        onSelectionChange={handleSelectionChange}
+                        onReverseClick={handleReverse}
+                    />
+                    <CollectionGrid
+                        pokemons={displayedPokemons}
+                        isFiltered={isFiltered}
+                    />
+                </CardContext.Provider>
+            )}
+            {pokemon && (
+                <PokemonStatsModal
+                    isDialogOpen={isDialogOpen}
+                    pokemon={pokemon}
+                    handleDialog={handleCloseDialog}
                 />
-                <CollectionGrid
-                    pokemons={displayedPokemons}
-                    isFiltered={isFiltered}
-                />
-            </CardContext.Provider>
-            <PokemonStatsModal
-                isDialogOpen={isDialogOpen}
-                pokemon={pokemon}
-                handleDialog={handleCloseDialog}
-            />
+            )}
         </>
     );
 }

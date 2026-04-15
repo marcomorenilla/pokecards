@@ -20,8 +20,9 @@ class MazeController extends Controller
     {
         $userId = $request->input('user_id');
         $pokemonId = $request->input('pokemon_id');
+        $position = $request->input('position');
 
-        Maze::create(['user_id' => $userId, 'pokemon_id' => $pokemonId]);
+        Maze::create(['user_id' => $userId, 'pokemon_id' => $pokemonId, 'position' => $position]);
     }
 
     public function deleteMaze()

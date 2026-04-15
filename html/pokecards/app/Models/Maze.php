@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-#[Fillable(['user_id', 'pokemon_id'])]
+#[Fillable(['user_id', 'pokemon_id', 'position'])]
 
 class Maze extends Model
 {
