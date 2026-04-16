@@ -24,7 +24,6 @@ class PokemonController extends Controller
 
         DB::transaction(function () use ($pokedex, $typeMap) {
             foreach ($pokedex as $pokeData) {
-                Log::channel('custom')->info('weight: ' . $pokeData['weight']);
 
                 $pokemon = Pokemon::create([
                     'pokeapi_id'         => $pokeData['id'],

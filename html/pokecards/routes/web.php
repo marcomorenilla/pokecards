@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\MazeController;
 use App\Http\Controllers\PokemonController;
+use App\Http\Controllers\SocialController;
 use App\Http\Controllers\TypeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -26,4 +27,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/maze', [MazeController::class, 'render']);
     Route::post('/maze/addToMaze', [MazeController::class, 'addToMaze']);
     Route::post('/maze/delete', [MazeController::class, 'deleteMaze']);
+    Route::get('/social', [SocialController::class, 'render']);
 });

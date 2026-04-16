@@ -5,14 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Collection;
 use App\Models\Maze;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class MazeController extends Controller
 {
     public function render()
     {
-        $maze = Maze::with('pokemons.types')->get();
-        $pokemons = Collection::with('pokemons.types')->get();
+        $maze = Maze::where('user_id', Auth::id())->with('pokemons.types')->get();
+        $pokemons = Collection::where('user_id', Auth::id())->with('pokemons.types')->get();
         return Inertia::render('maze', ["pokemons" => $pokemons, "maze" => $maze]);
     }
 

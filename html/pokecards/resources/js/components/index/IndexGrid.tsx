@@ -42,9 +42,12 @@ export function IndexGrid({ coins }: CoinsProps) {
         }
     };
 
-    const handleShowCards = async (number: Number) => {
-        const packContent = await axios.post('/cards/open', { cards: number });
-        setPackContent(packContent.data);
+    const handleShowCards = async (number: any) => {
+        console.log('cards', number);
+        const response = await axios.post('/cards/open', { cards: number });
+        const data = response.data;
+        console.log(data.length);
+        setPackContent(data);
         handleDialog();
     };
 

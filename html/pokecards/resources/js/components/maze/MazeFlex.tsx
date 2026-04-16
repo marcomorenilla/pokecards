@@ -46,28 +46,22 @@ export function MazeFlex({
         const pokemonObject = new Map();
 
         const mazeTeamValues = [...mazeTeam.values()];
-        console.log('id en maze', mazeTeamValues);
 
         pokemons.forEach((pokemonCollected: any) => {
             const pokemon = pokemonCollected.pokemons;
             let quantity = pokemonCollected.quantity;
-            console.log(quantity);
 
             const pokemonInMaze = mazeTeamValues.find(
                 (value: any) =>
                     value.pokemon['pokeapi_id'] == pokemon['pokeapi_id'],
             );
-            console.log('pokemon in maze', pokemonInMaze);
 
             if (pokemonInMaze) {
-                console.log('pokemon object in maze', pokemonInMaze);
                 quantity--;
-                pokemonObject.set(pokemon['pokeapi_id'], {
-                    pokemon: pokemon,
-                    quantity: quantity,
-                });
-            } else {
-                //                pokemonObject.set(pokemon['pokeapi_id'], { pokemon, quantity });
+            }
+
+            if (quantity > 0) {
+                pokemonObject.set(pokemon['pokeapi_id'], { pokemon, quantity });
             }
         });
 
@@ -134,12 +128,6 @@ export function MazeFlex({
                 <article className="scroll-custom relative hidden h-3/5 max-h-screen w-1/2 overflow-scroll rounded-xl border-4 border-[#ffcb05]/30 lg:block">
                     <div className="sticky top-0 z-30 flex justify-between self-center bg-[#222] p-10 text-2xl font-bold text-white/60">
                         <h2>INVENTARIO</h2>
-                        <button
-                            onClick={handleOpenDialog}
-                            className="cursor-pointer rounded-xl border border-red-500 bg-red-500/30 p-2 text-sm text-red-500 hover:scale-110 hover:bg-red-500 hover:text-white"
-                        >
-                            Eliminar mazo
-                        </button>
                     </div>
                     <div className="mt-10 flex flex-wrap justify-center gap-10">
                         <MazeContext.Provider
@@ -154,10 +142,16 @@ export function MazeFlex({
                 </article>
 
                 <div className="scroll-custom flex h-full max-h-screen w-full flex-col overflow-scroll rounded-xl border-4 border-[#ffcb05]/30 lg:h-fit lg:max-h-none lg:w-1/2">
-                    <h2 className="sticky top-0 flex w-full justify-center self-center bg-[#222] p-10 text-2xl font-bold text-white/60">
-                        MAZO
-                    </h2>
-                    <div className="mt-10 mb-10 grid grid-cols-1 place-content-center gap-10 px-8 md:grid-cols-2 lg:grid-cols-3">
+                    <div className="sticky top-0 z-30 flex w-full justify-between self-center bg-[#222] p-10 text-2xl font-bold text-white/60">
+                        <h2>MAZO</h2>
+                        <button
+                            onClick={handleOpenDialog}
+                            className="cursor-pointer rounded-xl border border-red-500 bg-red-500/30 p-2 text-sm text-red-500 hover:scale-110 hover:bg-red-500 hover:text-white"
+                        >
+                            Eliminar mazo
+                        </button>
+                    </div>
+                    <div className="mt-10 mb-10 grid grid-cols-1 place-items-center gap-10 px-8 md:grid-cols-2 lg:grid-cols-3">
                         {Array.from({ length: 6 }).map(
                             (_: any, index: number) => {
                                 const pokemonFinded: any = mazeTeam.get(index);
@@ -166,12 +160,14 @@ export function MazeFlex({
                                 console.log('pokemon finded', pokemonFinded);
                                 if (pokemonFinded) {
                                     return (
-                                        <PokemonCard
-                                            key={index}
-                                            parent="maze"
-                                            quantity={1}
-                                            pokemon={pokemonFinded.pokemon}
-                                        />
+                                        <div className="transition-all duration-300 ease-in-out hover:cursor-grabbing">
+                                            <PokemonCard
+                                                key={index}
+                                                parent="maze"
+                                                quantity={1}
+                                                pokemon={pokemonFinded.pokemon}
+                                            />
+                                        </div>
                                     );
                                 } else {
                                     return (

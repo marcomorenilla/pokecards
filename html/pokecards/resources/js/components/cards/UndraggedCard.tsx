@@ -10,7 +10,7 @@ export function UndraggedCard({
     return (
         <article
             onDragOver={() => handleDragOver(index)}
-            className="relative flex aspect-2/3 h-80 w-full max-w-100 cursor-pointer items-center justify-center rounded-xl border-2 border-dashed border-gray-500 bg-radial from-gray-800/50 to-gray-700/50 text-white"
+            className="relative flex aspect-2/3 h-80 max-w-100 cursor-pointer items-center justify-center rounded-xl border-2 border-dashed border-gray-500 bg-radial from-gray-800/50 to-gray-700/50 text-white"
         >
             <button
                 onClick={() => handleOpenCollection(index)}

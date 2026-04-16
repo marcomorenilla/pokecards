@@ -5,17 +5,27 @@ namespace App\Http\Controllers;
 use App\Models\Collection;
 use Illuminate\Http\Request;
 use App\Models\Pokemon;
-use Illuminate\Container\Facades\Auth;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Log;
 
-use function Pest\Laravel\json;
 
 class CollectionController extends Controller
 {
     public function getCards(Request $request)
     {
+        @unlink(storage_path('logs/poke.log'));
         $totalCards = $request->input('cards', 1);
-        $userId = 1;
+        $userId = Auth::id();
+
+        Log::channel('custom')->info('total de cartas', [
+            'total_cards' => $totalCards,
+        ]);
+        Log::channel('custom')->info('user id', [
+            'user id' => $userId,
+        ]);
+
+
 
         if (!$userId) {
             return response()->json(['error' => 'Usuario no autenticado'], 401);
@@ -40,12 +50,13 @@ class CollectionController extends Controller
             return $pokemon;
         }, $randArray);
 
-        return response()->json($pokemons, 200);
+        return  response()->json($pokemons);
     }
-
     public function showCollection()
     {
-        $pokemons = Collection::with('pokemons.types')->get();
+        $userId = Auth::id();
+
+        $pokemons = Collection::where('user_id', $userId)->with('pokemons.types')->get();
         return Inertia::render('collection', [
             'pokemons' => $pokemons
         ]);

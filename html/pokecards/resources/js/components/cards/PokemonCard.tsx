@@ -74,16 +74,16 @@ const cardConfig: any = {
     modal: {
         nameTextSize: 'text-xl',
         badgeTextSize: 'text-sm',
-        cardHeight: 'h-140',
+        cardHeight: 'h-160',
         mainTextSize: 'text-lg',
-        spriteSize: 'size-40',
+        spriteSize: 'size-30',
     },
     maze: {
         nameTextSize: 'text-sm',
         badgeTextSize: 'text-xs',
         cardHeight: 'h-80',
         mainTextSize: 'text-[10px]',
-        spriteSize: 'size-10',
+        spriteSize: 'size-15',
     },
 };
 
@@ -171,7 +171,7 @@ export function PokemonCard({ pokemon, parent, quantity }: CardProps) {
                     style={{
                         background: `linear-gradient(to bottom right, ${primary}, ${secondary})`,
                     }}
-                    className={`${onCardClick ? 'cursor-pointer' : ''} is-dragging animate-opacity relative flex aspect-2/3 max-w-100 rotate-x-(--rotate-x) rotate-y-(--rotate-y) flex-col transition-all duration-150 ease-in-out hover:scale-110 ${cardHeight} overflow-hidden rounded-xl p-3`}
+                    className={`${onCardClick ? 'cursor-pointer' : ''} is-dragging animate-opacity relative flex aspect-2/3 max-w-100 rotate-x-(--rotate-x) rotate-y-(--rotate-y) flex-col justify-between gap-2 transition-all duration-150 ease-in-out hover:scale-110 ${cardHeight} overflow-hidden rounded-xl p-3`}
                 >
                     <section
                         className={`flex items-center justify-between ${mainTextSize} font-bold text-gray-700`}
@@ -213,7 +213,7 @@ export function PokemonCard({ pokemon, parent, quantity }: CardProps) {
                     </section>
                     <section className="h-24">
                         <p
-                            className={`mt-1 h-auto rounded-xl ${mainTextSize} bg-white/30 p-1 text-gray-600 italic`}
+                            className={`h-auto rounded-xl ${mainTextSize} bg-white/30 p-1 text-gray-600 italic`}
                         >
                             "{description}"
                         </p>
@@ -252,7 +252,7 @@ export function PokemonCard({ pokemon, parent, quantity }: CardProps) {
                         </div>
                     </section>
                     <section
-                        className={`${badgeTextSize} mt-1 flex justify-center gap-1 font-bold text-gray-600 [&_div]:bg-white/10`}
+                        className={`${badgeTextSize} flex justify-center gap-1 font-bold text-gray-600 [&_div]:bg-white/10`}
                     >
                         {types.map((type) => {
                             return (

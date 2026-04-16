@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->unsignedInteger('coins')->default('500');
+            $table->string('img')->default('user.jpg');
         });
     }
 

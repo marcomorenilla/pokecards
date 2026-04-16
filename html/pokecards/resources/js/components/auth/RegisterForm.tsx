@@ -54,6 +54,7 @@ export function RegisterForm({ handleFormVisibility }: RegisterProps) {
             name: formData.get('username'),
             password: formData.get('password'),
             email: formData.get('email'),
+            img: `${String(formData.get('username')).trim()}.jpg`,
         };
         handleRegister(data);
         handleReset(initialState);
@@ -62,14 +63,14 @@ export function RegisterForm({ handleFormVisibility }: RegisterProps) {
     return (
         <>
             {isBackgroudRendered ? (
-                <div className="z-0 h-screen w-1 animate-visibility border-r border-l border-yellow-600 bg-white"></div>
+                <div className="animate-visibility z-0 h-screen w-1 border-r border-l border-yellow-600 bg-white"></div>
             ) : (
                 ''
             )}
             <form
                 method="post"
                 onSubmit={handleSubmit}
-                className="absolute z-1 flex animate-visibility flex-col items-center justify-center gap-4 rounded-xl border-2 border-yellow-600 bg-white p-10 shadow-xl shadow-yellow-600"
+                className="animate-visibility absolute z-1 flex flex-col items-center justify-center gap-4 rounded-xl border-2 border-yellow-600 bg-white p-10 shadow-xl shadow-yellow-600"
             >
                 <h1 className="mb-10 text-3xl font-bold">Registro:</h1>
                 <FormInput

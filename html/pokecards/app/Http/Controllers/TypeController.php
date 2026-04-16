@@ -12,7 +12,6 @@ class TypeController extends Controller
     {
         @unlink(storage_path('logs/poke.log'));
         $typesArray = $request->input('types');
-        Log::channel('custom')->info('types array count -  ' . count($typesArray));
 
         $typeIds =  collect($typesArray)->map(function ($typeName) {
             return Type::firstOrCreate(['type' => $typeName['type']], ['type_color' => $typeName['type_color']]);
