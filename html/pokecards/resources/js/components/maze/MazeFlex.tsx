@@ -123,9 +123,9 @@ export function MazeFlex({
     return (
         <>
             <section
-                className={`mt-15 flex ${isDragging ? 'cursor-grabbing' : ''} justify-center gap-5`}
+                className={`mt-15 flex ${isDragging ? 'cursor-grabbing' : ''} justify-center gap-3`}
             >
-                <article className="scroll-custom relative hidden h-3/5 max-h-screen w-1/2 overflow-scroll rounded-xl border-4 border-[#ffcb05]/30 lg:block">
+                <article className="scroll-custom relative hidden h-3/5 max-h-screen w-2/5 overflow-scroll rounded-xl border-4 border-[#ffcb05]/30 lg:block">
                     <div className="sticky top-0 z-30 flex justify-between self-center bg-[#222] p-10 text-2xl font-bold text-white/60">
                         <h2>INVENTARIO</h2>
                     </div>
@@ -141,7 +141,7 @@ export function MazeFlex({
                     </div>
                 </article>
 
-                <div className="scroll-custom flex h-full max-h-screen w-full flex-col overflow-scroll rounded-xl border-4 border-[#ffcb05]/30 lg:h-fit lg:max-h-none lg:w-1/2">
+                <div className="scroll-custom flex h-full max-h-screen w-3/5 flex-col overflow-scroll rounded-xl border-4 border-[#ffcb05]/30 lg:h-fit lg:max-h-none">
                     <div className="sticky top-0 z-30 flex w-full justify-between self-center bg-[#222] p-10 text-2xl font-bold text-white/60">
                         <h2>MAZO</h2>
                         <button
@@ -155,9 +155,6 @@ export function MazeFlex({
                         {Array.from({ length: 6 }).map(
                             (_: any, index: number) => {
                                 const pokemonFinded: any = mazeTeam.get(index);
-                                console.log('pokemon map', pokemonMap);
-                                console.log('maze render', mazeTeam);
-                                console.log('pokemon finded', pokemonFinded);
                                 if (pokemonFinded) {
                                     return (
                                         <div className="transition-all duration-300 ease-in-out hover:cursor-grabbing">

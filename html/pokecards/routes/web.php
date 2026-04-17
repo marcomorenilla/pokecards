@@ -28,4 +28,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/maze/addToMaze', [MazeController::class, 'addToMaze']);
     Route::post('/maze/delete', [MazeController::class, 'deleteMaze']);
     Route::get('/social', [SocialController::class, 'render']);
+    Route::post('/social/like', [SocialController::class, 'toggleLikeReaction']);
 });

@@ -15,4 +15,9 @@ class Maze extends Model
     {
         return $this->belongsTo(Pokemon::class, 'pokemon_id', 'pokeapi_id');
     }
+
+    public function users(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }

@@ -1,9 +1,8 @@
 import { SocialWrapper } from '../components/social/SocialWrapper';
 import MainLayout from '../layouts/MainLayout';
 
-export default function Social({ pokemons, auth }: any) {
-    const { user } = auth;
-    return <SocialWrapper user={user} mazes={pokemons} />;
+export default function Social({ users_mazes, reacted }: any) {
+    return <SocialWrapper reacted={reacted} usersMazes={users_mazes} />;
 }
 
 Social.layout = (page: any) => {

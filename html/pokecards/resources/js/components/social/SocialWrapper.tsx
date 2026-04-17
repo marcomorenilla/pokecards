@@ -1,37 +1,70 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { SocialInfo } from './SocialInfo';
 import { SocialSection } from './SocialSection';
+import { router } from '@inertiajs/react';
 
 const initialMazeMap = new Map();
-export function SocialWrapper({ mazes, user: auth }: any) {
-    const [usersMazes, setUsersMazes] = useState(initialMazeMap);
+export function SocialWrapper({ usersMazes, reacted }: any) {
+    const reactedArray = useMemo(() => {
+        const reactedGroup = new Map<string, number[]>([
+            ['likeReaction', []],
+            ['dislikeReaction', []],
+        ]);
 
-    useEffect(() => {
-        const newMap = new Map(usersMazes);
-        mazes.map((data: any) => {
-            const userId = data['user_id'];
-            const pokemon = data.pokemons;
+        reacted.forEach((singleReaction: any) => {
+            const key =
+                singleReaction.reaction === 1
+                    ? 'likeReaction'
+                    : 'dislikeReaction';
 
-            let userList = newMap.get(userId);
-            if (userList) {
-                newMap.set(userId, [...userList, pokemon]);
-            } else {
-                newMap.set(userId, Array.from(pokemon));
-            }
+            const currentArray = reactedGroup.get(key) || [];
+
+            reactedGroup.set(key, [...currentArray, singleReaction.maze_id]);
         });
-        setUsersMazes(newMap);
-        for (let [key, value] of newMap) {
-            console.log('key', key);
-            console.log('value', value);
-        }
-    }, []);
+
+        return reactedGroup;
+    }, [reacted]);
+    const handleLiked = (mazeId: any) => {
+        router.post(
+            '/social/like',
+            { maze_id: mazeId, reaction: 1 },
+            { preserveScroll: true },
+        );
+    };
+    const handleDisliked = (mazeId: any) => {
+        router.post(
+            '/social/like',
+            { maze_id: mazeId, reaction: 0 },
+            { preserveScroll: true },
+        );
+    };
 
     return (
         <>
             <SocialInfo />
-            {Array.from(usersMazes).map(([user, maze]) => (
-                <SocialSection pokemons={maze} user={auth} key={user} />
-            ))}
+            {usersMazes &&
+                usersMazes.map((user: any) => {
+                    const userProp = { name: user.name, img: user.img };
+                    const maze = user.mazes;
+
+                    const likedArray = reactedArray.get('likeReaction');
+                    const dislikedArray = reactedArray.get('dislikeReaction');
+                    const liked = likedArray?.includes(user.id);
+                    const disliked = dislikedArray?.includes(user.id);
+
+                    return (
+                        <SocialSection
+                            key={user.id}
+                            mazeId={user.id}
+                            user={userProp}
+                            maze={maze}
+                            liked={liked}
+                            disliked={disliked}
+                            handleLiked={handleLiked}
+                            handleDisliked={handleDisliked}
+                        />
+                    );
+                })}
         </>
     );
 }

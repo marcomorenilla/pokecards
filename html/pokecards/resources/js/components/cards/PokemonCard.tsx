@@ -80,7 +80,7 @@ const cardConfig: any = {
     },
     maze: {
         nameTextSize: 'text-sm',
-        badgeTextSize: 'text-xs',
+        badgeTextSize: 'text-[8px]',
         cardHeight: 'h-80',
         mainTextSize: 'text-[10px]',
         spriteSize: 'size-15',
@@ -171,7 +171,7 @@ export function PokemonCard({ pokemon, parent, quantity }: CardProps) {
                     style={{
                         background: `linear-gradient(to bottom right, ${primary}, ${secondary})`,
                     }}
-                    className={`${onCardClick ? 'cursor-pointer' : ''} is-dragging animate-opacity relative flex aspect-2/3 max-w-100 rotate-x-(--rotate-x) rotate-y-(--rotate-y) flex-col justify-between gap-2 transition-all duration-150 ease-in-out hover:scale-110 ${cardHeight} overflow-hidden rounded-xl p-3`}
+                    className={`${onCardClick ? 'cursor-pointer' : ''} is-dragging animate-opacity relative flex aspect-2/3 max-w-100 flex-col justify-between gap-1 transition-all duration-150 ease-in-out hover:scale-110 ${cardHeight} overflow-hidden rounded-xl p-3`}
                 >
                     <section
                         className={`flex items-center justify-between ${mainTextSize} font-bold text-gray-700`}
