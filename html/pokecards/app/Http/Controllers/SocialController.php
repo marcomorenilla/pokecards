@@ -14,30 +14,39 @@ class SocialController extends Controller
 {
     public function render()
     {
-        $usersWithMazes = User::with('mazes.pokemons.types')->get();
+        @unlink(storage_path('/logs/poke.log'));
+        //$usersWithMazes = User::with('mazes.pokemons.types')->get();
+        $usersWithMazes = User::with(['mazes' => function ($query) {
+            $query->withCount(['likes', 'dislikes'])
+                ->with('pokemons.types');
+        }])->get();
         $liked = Social::where('user_id', Auth::id())->get();
         return Inertia::render('social', ['reacted' => $liked, 'users_mazes' => $usersWithMazes]);
     }
+
     public function toggleLikeReaction(Request $request)
     {
-        @unlink(storage_path('logs/poke.log'));
-        $userId =  Auth::id();
+        @unlink(storage_path('/logs/poke.log'));
+        $userId = Auth::id();
         $mazeId = $request->input('maze_id');
-        $reaction = $request->input('reaction');
+        $newReaction = (int) $request->input('reaction');
 
-        Log::channel('custom')->info('request', [$request->all()]);
-
-        $exists = Social::where('user_id', $userId)->where('maze_id', $mazeId)->where('reaction', $reaction)->first();
-        Log::channel('custom')->info('exists', [$exists]);
-
-        if ($exists) {
-            $exists->delete();
+        $existingReaction = Social::where('user_id', $userId)
+            ->where('maze_id', $mazeId)
+            ->first();
+        Log::channel('custom')->info('existing reaction', [$existingReaction]);
+        if ($existingReaction) {
+            if ($existingReaction->reaction == $newReaction) {
+                $existingReaction->delete();
+            } else {
+                $existingReaction->update(['reaction' => $newReaction]);
+            }
         } else {
             Social::create([
-                'user_id' => $userId,
-                'maze_id' => $mazeId,
-                'reaction' => $reaction,
-                'count' => 1
+                'user_id'  => $userId,
+                'maze_id'  => $mazeId,
+                'reaction' => $newReaction,
+                'count'    => 1
             ]);
         }
 

@@ -6,7 +6,7 @@ import { router } from '@inertiajs/react';
 const initialMazeMap = new Map();
 export function SocialWrapper({ usersMazes, reacted }: any) {
     const reactedArray = useMemo(() => {
-        const reactedGroup = new Map<string, number[]>([
+        const reactedGroup = new Map<string, any>([
             ['likeReaction', []],
             ['dislikeReaction', []],
         ]);

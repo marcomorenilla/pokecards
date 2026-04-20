@@ -12,6 +12,16 @@ export function SocialSection({
 }: any) {
     const { name, img } = user;
 
+    const [likeCount, setLikeCount] = useState(0);
+    const [dislikeCount, setDislikeCount] = useState(0);
+
+    useEffect(() => {
+        if (maze.length > 0) {
+            setLikeCount(maze[0]['likes_count']);
+            setDislikeCount(maze[0]['dislikes_count']);
+        }
+    }, [maze]);
+
     const imgLower = img.toLowerCase();
 
     return (
@@ -44,7 +54,7 @@ export function SocialSection({
                                 ),
                         )}
                     </section>
-                    <section className="flex gap-2 p-3">
+                    <section className="flex items-center gap-2 p-3">
                         <svg
                             width="50"
                             height="50px"
@@ -74,6 +84,7 @@ export function SocialSection({
                                 ></path>
                             </g>
                         </svg>
+                        <p className="font-bold text-white/50">{likeCount}</p>
                         <svg
                             width="50"
                             height="50px"
@@ -111,6 +122,9 @@ export function SocialSection({
                                 ></path>{' '}
                             </g>
                         </svg>
+                        <p className="font-bold text-white/50">
+                            {dislikeCount}
+                        </p>
                     </section>
                 </article>
             )}

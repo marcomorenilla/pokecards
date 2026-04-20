@@ -36,4 +36,13 @@ class User extends Authenticatable
     {
         return $this->hasMany(Maze::class, 'user_id', 'id');
     }
+
+    public function likes(): HasManyThrough
+    {
+        return $this->hasManyThrough(Social::class, Maze::class, 'user_id', 'maze_id', 'id', 'user_id')->where('reaction', 1)->distinct();
+    }
+    public function dislikes(): HasManyThrough
+    {
+        return $this->hasManyThrough(Social::class, Maze::class, 'user_id', 'maze_id', 'id', 'user_id')->where('reaction', 0)->distinct();
+    }
 }
